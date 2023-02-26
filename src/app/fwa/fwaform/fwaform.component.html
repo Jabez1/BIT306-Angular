@@ -1,0 +1,19 @@
+
+<form (submit)="onFWASubmit(fwaForm)" #fwaForm = "ngForm">
+  <label>Work Type</label><br>
+  <select name="workType" id="workType">
+    <option *ngFor="let type of enumVal(workTypes)" [ngValue]="type" >{{type}}</option>
+  </select>
+  <br>
+  <label>Description</label><br>
+  <input
+  name="description"
+  ngModel><br>
+  <label>Reasoning</label><br>
+  <input
+  name="reason"
+  ngModel
+  ><br>
+  <button type="submit">Submit</button>
+  <button type="reset">Cancel</button>
+</form>
