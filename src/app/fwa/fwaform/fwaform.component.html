@@ -1,8 +1,8 @@
 
-<form (submit)="onFWASubmit(fwaForm)" #fwaForm = "ngForm">
+<form (submit)="onFWASubmit(fwaForm)" #fwaForm = "ngForm" method="get">
   <label>Work Type</label><br>
   <select name="workType" id="workType">
-    <option *ngFor="let type of enumVal(workTypes)" [ngValue]="type" >{{type}}</option>
+    <option *ngFor="let type of enumKeys(workTypes)" [value]="type" >{{enumVal(type)}}</option>
   </select>
   <br>
   <label>Description</label><br>

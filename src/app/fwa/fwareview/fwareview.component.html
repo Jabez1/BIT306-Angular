@@ -1,0 +1,16 @@
+<h1>Active FWA Requests</h1>
+<mat-accordion mult="true" *ngIf="fwaList.length>0">
+  <mat-expansion-panel *ngFor="let fwa of fwaList">
+    <!--{{fwa | json}}-->
+    <mat-expansion-panel-header>
+      {{fwa.requestID}}
+    </mat-expansion-panel-header>
+    <p>{{fwa.requestDate}}</p>
+    <p>{{fwa.workType}}</p>
+    <p>{{Status[fwa.status]}}</p>
+    <button (click)="onFWASubmit(fwa.requestID, 'accept')">Approve</button>
+    <button (click)="onFWASubmit(fwa.requestID, 'reject')">Reject</button>
+  </mat-expansion-panel>
+</mat-accordion>
+
+<p class="info-text mat-body 1" *ngIf="fwaList.length==0">No post added yet</p>
