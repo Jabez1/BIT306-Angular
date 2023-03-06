@@ -1,19 +1,47 @@
+<h1>Flexible Working Arrangements (FWA) Request Form</h1>
+<mat-card>
+  <form (submit)="onFWASubmit(fwaForm)" #fwaForm = "ngForm" method="get">
+    <h3>FWA Specifications & Justifications</h3>
+    <mat-form-field>
+      <mat-label>Work Type</mat-label>
+      <mat-select name="workType" id="workType" required>
+        <mat-option *ngFor="let type of enumKeys(workTypes)" [value]="type" >{{enumVal(type)}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <mat-label>Description</mat-label>
+      <textarea
+      matInput
+      rows= "3"
+      type="text"
+      name="description"
+      ngModel
+      required
+      minlength="3"
+      #description="ngModel"></textarea>
+      <mat-error *ngIf="description.invalid">Please enter a valid description</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <mat-label>Reasoning</mat-label>
+      <textarea
+      matInput
+      rows= "3"
+      type="text"
+      name="reason"
+      ngModel
+      required
+      minlength="3"
+      #reason="ngModel"></textarea>
+      <mat-error *ngIf="reason.invalid">Please enter valid reasoning</mat-error>
+    </mat-form-field>
+    <br>
+    <div class="button-container">
+      <button mat-raised-button color="accent" type="submit">Submit</button>
+      <button mat-raised-button color="warn" type="reset">Cancel</button>
+    </div>
 
-<form (submit)="onFWASubmit(fwaForm)" #fwaForm = "ngForm" method="get">
-  <label>Work Type</label><br>
-  <select name="workType" id="workType">
-    <option *ngFor="let type of enumKeys(workTypes)" [value]="type" >{{enumVal(type)}}</option>
-  </select>
-  <br>
-  <label>Description</label><br>
-  <input
-  name="description"
-  ngModel><br>
-  <label>Reasoning</label><br>
-  <input
-  name="reason"
-  ngModel
-  ><br>
-  <button type="submit">Submit</button>
-  <button type="reset">Cancel</button>
-</form>
+
+  </form>
+</mat-card>

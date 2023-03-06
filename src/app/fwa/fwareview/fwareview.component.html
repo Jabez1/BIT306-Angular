@@ -8,8 +8,8 @@
     <p>{{fwa.requestDate}}</p>
     <p>{{fwa.workType}}</p>
     <p>{{Status[fwa.status]}}</p>
-    <button (click)="onFWASubmit(fwa.requestID, 'accept')">Approve</button>
-    <button (click)="onFWASubmit(fwa.requestID, 'reject')">Reject</button>
+    <button mat-raised-button color="accent" (click)="onFWASubmit(fwa.requestID, 'accept')">Approve</button>
+    <button mat-raised-button color="warn" (click)="onFWASubmit(fwa.requestID, 'reject')">Reject</button>
   </mat-expansion-panel>
 </mat-accordion>
 

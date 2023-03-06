@@ -1,0 +1,14 @@
+:host{
+  display:block;
+  margin-top:1rem;
+}
+
+info-text{
+  text-align: center;
+}
+
+button{
+  padding: 20px 30px;
+  font-size: 1.2em;
+  margin-right: 30px;
+}
