@@ -4,8 +4,12 @@
     <h3>FWA Specifications & Justifications</h3>
     <mat-form-field>
       <mat-label>Work Type</mat-label>
-      <mat-select name="workType" id="workType" required>
-        <mat-option *ngFor="let type of enumKeys(workTypes)" [value]="type" >{{enumVal(type)}}</mat-option>
+      <mat-select
+      name="workType"
+      required
+      ngModel
+      #workType ="ngModel">
+        <mat-option *ngFor="let type of WorkTypeKeys as int" [value]="type" >{{getVal(type)}}</mat-option>
       </mat-select>
     </mat-form-field>
     <br>

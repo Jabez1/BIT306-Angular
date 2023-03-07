@@ -10,21 +10,22 @@ import { NgForm } from '@angular/forms';
 })
 
 export class FwaFormComponent {
-  enumKeys = Object.keys;
-  workTypes = WorkType;
-
-  enumVal(enumKey: string) {
-   return WorkType[enumKey as keyof typeof WorkType];
-  }
+  readonly WorkTypes = WorkType;
+  readonly WorkTypeKeys = Object.keys(WorkType);
   constructor(public fwaService: FWAService){}
+
+  getVal(key: any){
+    return WorkType[key as keyof typeof WorkType];
+  }
 
   onFWASubmit(form: NgForm){
     if (form.invalid){
       return;
     }
     //console.log(WorkType[form.value.WorkType as keyof typeof WorkType]);
-    //console.log(form.value.WorkType);
-    //console.log(WorkType.FlexiHour);
+    console.log(form.value.workType);
+    console.log(form.value.workType);
+    console.log(WorkType.FlexiHour);
     this.fwaService.addFWA(form.value.workType, form.value.description, form.value.reason)
   }
 }
