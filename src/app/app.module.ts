@@ -16,11 +16,13 @@ import { FwaViewComponent } from './fwa/fwaview/fwaview.component';
 import { FwaReviewComponent } from './fwa/fwareview/fwareview.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './header/header.component';
+import { LoginComponent } from './login/login.component';
 
 const appRoutes : Routes = [
   {path: 'fwaReq', component : FwaFormComponent},
   {path: 'fwaRev', component : FwaReviewComponent},
-  {path: 'fwaView', component : FwaViewComponent}
+  {path: 'fwaView', component : FwaViewComponent},
+  { path: 'login', component: LoginComponent }
   /*
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
@@ -39,7 +41,7 @@ const appRoutes : Routes = [
         { path: 'reviewemployeesche', component: reviewemployeesche }
       ]
   },
-  { path: 'employee-home', component: EmpHomexComponent ,
+  { path: 'employee-home', component: EmpHomeComponent ,
       children: [
         { path: '', redirectTo: 'updatedailyschedule', pathMatch: 'full' },
         { path: 'updatedailyschedule', component: updatedailyschedule },
@@ -56,6 +58,7 @@ const appRoutes : Routes = [
     FwaViewComponent,
     FwaReviewComponent,
     HeaderComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
