@@ -1,1 +1,6 @@
-<mat-toolbar color="primary" ><b><i>FlexIS</i></b></mat-toolbar>
+<mat-toolbar color="primary" ><b><i>FlexIS</i></b>
+  <a *ngIf = "!signedIn" routerLink="/login">
+  <span class="material-icons">
+  logout
+  </span>Log Out</a>
+</mat-toolbar>
