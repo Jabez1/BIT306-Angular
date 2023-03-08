@@ -25,11 +25,11 @@ export class LoginService {
     if(emp != undefined) {
       this.loggedInEmployee= emp;
       if(emp.position === Position.Admin){
-        this.router.navigate(['/fwaView']);
+        this.router.navigate(['/admin-home']);
       } else if(emp.position === Position.Supervisor){
-        this.router.navigate(['/fwaRev'])
+        this.router.navigate(['/supervisor-home'])
       } else if(emp.position === Position.Employee){
-        this.router.navigate(['/fwaReq'])
+        this.router.navigate(['/employee-home'])
       }
       return true;
     }

@@ -1,0 +1,21 @@
+mat-toolbar{
+  height: 40px;
+}
+
+a{
+  text-decoration: none;
+  font-weight: bolder;
+  border-right: 3px solid black;
+  height: 40px;
+  line-height: 40px;
+  padding: 0px 25px 0px 25px;
+}
+
+a:active{
+  color:black;
+}
+
+.container{
+  width:80%;
+  margin:auto;
+}

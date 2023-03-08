@@ -17,38 +17,38 @@ import { FwaReviewComponent } from './fwa/fwareview/fwareview.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './login/login.component';
+import { AdminHomeComponent } from './user-homes/admin-home/admin-home.component';
+import { EmpHomeComponent } from './user-homes/emp-home/emp-home.component';
+import { SupHomeComponent } from './user-homes/sup-home/sup-home.component';
 
 const appRoutes : Routes = [
-  { path: 'fwaReq', component : FwaFormComponent },
-  { path: 'fwaRev', component : FwaReviewComponent },
-  { path: 'fwaView', component : FwaViewComponent },
-  { path: 'login', component: LoginComponent }
-  /*
+
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
-  { path: 'admin-home', component: AdminComponent ,
+  { path: 'admin-home', component: AdminHomeComponent ,
       children: [
         { path: '', redirectTo: 'fwaView', pathMatch: 'full' },
-        { path: 'fwaView', component: FwaViewComponent },
-        { path: 'regemployee', component: regemployee }
+        //{ path: 'regemployee', component: regemployee },
+        { path: 'fwaView', component: FwaViewComponent }
       ]
   },
   { path: 'supervisor-home', component: SupHomeComponent ,
       children: [
         { path: '', redirectTo: 'fwaView', pathMatch: 'full' },
         { path: 'fwaView', component: FwaViewComponent },
-        { path: 'fwaRev', component: FwaReviewComponent },
-        { path: 'reviewemployeesche', component: reviewemployeesche }
+        //{ path: 'reviewemployeesche', component: reviewemployeesche },
+        { path: 'fwaRev', component: FwaReviewComponent }
       ]
   },
   { path: 'employee-home', component: EmpHomeComponent ,
       children: [
-        { path: '', redirectTo: 'updatedailyschedule', pathMatch: 'full' },
-        { path: 'updatedailyschedule', component: updatedailyschedule },
+        { path: '', redirectTo: 'fwaReq', pathMatch: 'full' },
+        //{ path: '', redirectTo: 'updatedailyschedule', pathMatch: 'full' },
+        //{ path: 'updatedailyschedule', component: updatedailyschedule },
         { path: 'fwaReq', component: FwaFormComponent }
       ]
   }
-  */
+
 ]
 
 @NgModule({
@@ -59,6 +59,9 @@ const appRoutes : Routes = [
     FwaReviewComponent,
     HeaderComponent,
     LoginComponent,
+    AdminHomeComponent,
+    EmpHomeComponent,
+    SupHomeComponent,
   ],
   imports: [
     BrowserModule,

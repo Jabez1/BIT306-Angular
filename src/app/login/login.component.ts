@@ -13,6 +13,9 @@ export class LoginComponent {
 
   login(form : NgForm){
     console.log(form.value.empID, form.value.password);
+    if(form.invalid){
+      return;
+    } else
     this.loginService.login(form.value.empID, form.value.password);
   }
 }
