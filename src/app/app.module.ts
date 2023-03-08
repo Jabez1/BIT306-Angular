@@ -19,9 +19,9 @@ import { HeaderComponent } from './header/header.component';
 import { LoginComponent } from './login/login.component';
 
 const appRoutes : Routes = [
-  {path: 'fwaReq', component : FwaFormComponent},
-  {path: 'fwaRev', component : FwaReviewComponent},
-  {path: 'fwaView', component : FwaViewComponent},
+  { path: 'fwaReq', component : FwaFormComponent },
+  { path: 'fwaRev', component : FwaReviewComponent },
+  { path: 'fwaView', component : FwaViewComponent },
   { path: 'login', component: LoginComponent }
   /*
   { path: '', redirectTo: 'login', pathMatch: 'full' },

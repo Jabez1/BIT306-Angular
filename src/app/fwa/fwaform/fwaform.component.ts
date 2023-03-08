@@ -22,10 +22,6 @@ export class FwaFormComponent {
     if (form.invalid){
       return;
     }
-    //console.log(WorkType[form.value.WorkType as keyof typeof WorkType]);
-    console.log(form.value.workType);
-    console.log(form.value.workType);
-    console.log(WorkType.FlexiHour);
     this.fwaService.addFWA(form.value.workType, form.value.description, form.value.reason)
   }
 }
