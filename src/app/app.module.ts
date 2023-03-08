@@ -20,6 +20,9 @@ import { LoginComponent } from './login/login.component';
 import { AdminHomeComponent } from './user-homes/admin-home/admin-home.component';
 import { EmpHomeComponent } from './user-homes/emp-home/emp-home.component';
 import { SupHomeComponent } from './user-homes/sup-home/sup-home.component';
+import { RegEmpComponent } from './reg-emp/reg-emp.component';
+import { RevEmpScheduleComponent } from './rev-emp-schedule/rev-emp-schedule.component';
+import { UpdateDailyScheduleComponent } from './update-daily-schedule/update-daily-schedule.component';
 
 const appRoutes : Routes = [
 
@@ -28,7 +31,7 @@ const appRoutes : Routes = [
   { path: 'admin-home', component: AdminHomeComponent ,
       children: [
         { path: '', redirectTo: 'fwaView', pathMatch: 'full' },
-        //{ path: 'regemployee', component: regemployee },
+        { path: 'RegEmp', component: RegEmpComponent },
         { path: 'fwaView', component: FwaViewComponent }
       ]
   },
@@ -36,15 +39,15 @@ const appRoutes : Routes = [
       children: [
         { path: '', redirectTo: 'fwaView', pathMatch: 'full' },
         { path: 'fwaView', component: FwaViewComponent },
-        //{ path: 'reviewemployeesche', component: reviewemployeesche },
+        { path: 'RevEmpSched', component: RevEmpScheduleComponent },
         { path: 'fwaRev', component: FwaReviewComponent }
       ]
   },
   { path: 'employee-home', component: EmpHomeComponent ,
       children: [
         { path: '', redirectTo: 'fwaReq', pathMatch: 'full' },
-        //{ path: '', redirectTo: 'updatedailyschedule', pathMatch: 'full' },
-        //{ path: 'updatedailyschedule', component: updatedailyschedule },
+        { path: '', redirectTo: 'updateDailySchedule', pathMatch: 'full' },
+        { path: 'updateDailySchedule', component: UpdateDailyScheduleComponent },
         { path: 'fwaReq', component: FwaFormComponent }
       ]
   }
@@ -62,6 +65,9 @@ const appRoutes : Routes = [
     AdminHomeComponent,
     EmpHomeComponent,
     SupHomeComponent,
+    RegEmpComponent,
+    RevEmpScheduleComponent,
+    UpdateDailyScheduleComponent,
   ],
   imports: [
     BrowserModule,

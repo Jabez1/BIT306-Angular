@@ -33,7 +33,7 @@ export class LoginService {
       }
       return true;
     }
-    alert("fail");
+    alert("User not found, please try again");
     return false;
   }
 
