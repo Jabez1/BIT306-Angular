@@ -6,6 +6,7 @@ import { Injectable } from "@angular/core";
 export class FWAService {
   private fwaList: FWA[] = [
     {
+      employeeID: "E002",
       requestID: "R001",
       requestDate: new Date("2023-01-16"),
       workType: WorkType.WorkFromHome,
@@ -14,6 +15,7 @@ export class FWAService {
       status: Status.Pending,
       comment: ""},
     {
+      employeeID: "E001",
       requestID: "R002",
       requestDate: new Date("2023-02-16"),
       workType: WorkType.FlexiHour,
@@ -22,6 +24,7 @@ export class FWAService {
       status: Status.Accepted,
       comment: ""},
     {
+      employeeID: "E003",
       requestID: "R003",
       requestDate: new Date("2023-02-17"),
       workType: WorkType.Hybrid,
@@ -30,6 +33,7 @@ export class FWAService {
       status: Status.Pending,
       comment: ""},
     {
+      employeeID: "E004",
       requestID: "R004",
       requestDate: new Date("2023-02-20"),
       workType: WorkType.WorkFromHome,
@@ -39,21 +43,32 @@ export class FWAService {
       comment: ""
     },
     {
+      employeeID: "E005",
       requestID: "R005",
       requestDate: new Date(),
       workType: WorkType.WorkFromHome,
       description: "hi",
-      reason: "why not",
+      reason: "i am bed-ridden and my arms have fallen off",
       status: Status.Pending,
       comment: ""
-    }];
+  }];
 
+  groupBy = <T, K extends keyof any>(list: T[], getKey: (item: T) => K) =>
+  list.reduce((previous, currentItem) => {
+    const group = getKey(currentItem);
+    if (!previous[group]) previous[group] = [];
+    previous[group].push(currentItem);
+    return previous;
+  }, {} as Record<K, T[]>);
+
+  private groupedFwaList= this.groupBy(this.groupBy(this.fwaList, i=> i.employeeID), i => i.requestDate.toLocaleDateString());
   getFWAList(){
    return  this.fwaList;
   }
 
    addFWA(workType : WorkType, description: string, reason : string){
      const fwaR : FWA = {
+      employeeID: "",
       requestID: "test",
       requestDate: new Date(),
       workType: WorkType[workType as keyof typeof WorkType],
@@ -63,6 +78,7 @@ export class FWAService {
       comment: ""};
      this.fwaList.push(fwaR);
    }
+
 
    acceptFWA(reqID :string){
     this.fwaList.find(x => x.requestID === reqID)!.status = Status.Accepted;

@@ -1,0 +1,40 @@
+<div class="container">
+  <img  src="../../assets/img/LoginVector.jpg" alt="Vector Login image" class="loginImg">
+  <mat-card>
+    <form (submit)="login(loginForm)" #loginForm = "ngForm" method="get">
+      <h3>Employee Details</h3>
+      <mat-form-field>
+        <mat-label>Employee ID</mat-label>
+        <input
+        matInput
+        type="text"
+        name="empID"
+        ngModel
+        required
+        minlength="3"
+        #empID="ngModel">
+        <mat-error *ngIf="empID.invalid">Please enter a valid employee ID</mat-error>
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input
+        matInput
+        type="password"
+        name="password"
+        ngModel
+        required
+        minlength="3"
+        #password="ngModel">
+        <mat-error *ngIf="password.invalid">Please enter a valid password</mat-error>
+      </mat-form-field>
+      <br>
+      <div class="button-container">
+        <button mat-raised-button color="accent" type="submit">Login</button>
+      </div>
+
+
+    </form>
+  </mat-card>
+
+</div>
