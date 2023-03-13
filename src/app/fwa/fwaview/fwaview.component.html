@@ -3,7 +3,7 @@
   <mat-expansion-panel *ngFor="let fwa of fwaList">
     <!--{{fwa | json}}-->
     <mat-expansion-panel-header>
-      {{fwa.requestDate.toLocaleDateString()}}: {{fwaList.length}} Employees
+      {{fwa.requestDate.toLocaleDateString()}}
     </mat-expansion-panel-header>
     <p>{{fwa.workType}}</p>
     <p>{{fwa.employeeID}} {{employeeService.findEmpName(fwa.employeeID)}}</p>
