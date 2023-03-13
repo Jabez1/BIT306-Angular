@@ -25,4 +25,11 @@ export interface Employee {
   FWAStatus: FWAStatus;
   Status: Status;
   comment: string;
+  supervisorID: string;
+  deptID : string;
+}
+
+export interface Department {
+  deptID: string;
+  deptName: string;
 }

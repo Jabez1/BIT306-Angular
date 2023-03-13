@@ -16,13 +16,13 @@ import { FwaViewComponent } from './fwa/fwaview/fwaview.component';
 import { FwaReviewComponent } from './fwa/fwareview/fwareview.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderComponent } from './header/header.component';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './emp/login/login.component';
 import { AdminHomeComponent } from './user-homes/admin-home/admin-home.component';
 import { EmpHomeComponent } from './user-homes/emp-home/emp-home.component';
 import { SupHomeComponent } from './user-homes/sup-home/sup-home.component';
-import { RegEmpComponent } from './reg-emp/reg-emp.component';
-import { RevEmpScheduleComponent } from './rev-emp-schedule/rev-emp-schedule.component';
-import { UpdateDailyScheduleComponent } from './update-daily-schedule/update-daily-schedule.component';
+import { RegEmpComponent } from './emp/reg-emp/reg-emp.component';
+import { RevEmpScheduleComponent } from './emp-schedule/rev-emp-schedule/rev-emp-schedule.component';
+import { UpdateDailyScheduleComponent } from './emp-schedule/update-daily-schedule/update-daily-schedule.component';
 
 const appRoutes : Routes = [
 
@@ -30,8 +30,8 @@ const appRoutes : Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'admin-home', component: AdminHomeComponent ,
       children: [
-        { path: '', redirectTo: 'fwaView', pathMatch: 'full' },
-        { path: 'RegEmp', component: RegEmpComponent },
+        { path: '', redirectTo: 'regEmp', pathMatch: 'full' },
+        { path: 'regEmp', component: RegEmpComponent },
         { path: 'fwaView', component: FwaViewComponent }
       ]
   },
@@ -39,13 +39,12 @@ const appRoutes : Routes = [
       children: [
         { path: '', redirectTo: 'fwaView', pathMatch: 'full' },
         { path: 'fwaView', component: FwaViewComponent },
-        { path: 'RevEmpSched', component: RevEmpScheduleComponent },
+        { path: 'revEmpSched', component: RevEmpScheduleComponent },
         { path: 'fwaRev', component: FwaReviewComponent }
       ]
   },
   { path: 'employee-home', component: EmpHomeComponent ,
       children: [
-        { path: '', redirectTo: 'fwaReq', pathMatch: 'full' },
         { path: '', redirectTo: 'updateDailySchedule', pathMatch: 'full' },
         { path: 'updateDailySchedule', component: UpdateDailyScheduleComponent },
         { path: 'fwaReq', component: FwaFormComponent }

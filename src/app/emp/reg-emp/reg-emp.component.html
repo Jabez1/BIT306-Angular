@@ -1,0 +1,81 @@
+<h1>Register a New Employee</h1>
+<mat-card>
+  <form  (submit)="onEmpReg(regEmpForm)" #regEmpForm = "ngForm" method="get">
+    <h3>New Employee Details</h3>
+    <mat-form-field>
+      <mat-label>Employee ID</mat-label>
+      <input
+      matInput
+      type="text"
+      name="empID"
+      ngModel
+      required
+      minlength="3"
+      #empID="ngModel">
+      <mat-error *ngIf="empID.invalid">Please enter a valid employee ID</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <mat-label>Full Name</mat-label>
+      <input
+      matInput
+      type="text"
+      name="name"
+      ngModel
+      required
+      minlength="3"
+      #name="ngModel">
+      <mat-error *ngIf="name.invalid">Please enter a valid description</mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <mat-label>Department ID</mat-label>
+      <mat-select
+      name="deptID"
+      required
+      ngModel
+      #deptID ="ngModel">
+        <mat-option *ngFor="let depts of Departments" [value]="depts" >{{depts}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Position</mat-label>
+      <mat-select
+      name="position"
+      required
+      ngModel
+      #position ="ngModel">
+        <mat-option *ngFor="let pos of Positions as int" [value]="pos" >{{getVal(pos)}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input
+      matInput
+      type="text"
+      name="email"
+      ngModel
+      required
+      minlength="3"
+      #email="ngModel">
+      <mat-error *ngIf="email.invalid">Please enter a valid email</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Supervisor ID</mat-label>
+      <input
+      matInput
+      type="text"
+      name="supID"
+      ngModel
+      minlength="3"
+      #supID="ngModel">
+    </mat-form-field>
+    <br>
+    <div class="button-container">
+      <button mat-raised-button color="accent" type="submit">Submit</button>
+      <button mat-raised-button color="warn" type="reset">Cancel</button>
+    </div>
+
+
+  </form>
+</mat-card>

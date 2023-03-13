@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { LoginService } from './login.service';
+import { EmployeeService } from '../employee.service';
 
 @Component({
   selector: 'app-login',
@@ -9,13 +9,13 @@ import { LoginService } from './login.service';
 })
 export class LoginComponent {
 
-  constructor(public loginService: LoginService){}
+  constructor(public employeeService: EmployeeService){}
 
   login(form : NgForm){
     console.log(form.value.empID, form.value.password);
     if(form.invalid){
       return;
     } else
-    this.loginService.login(form.value.empID, form.value.password);
+    this.employeeService.login(form.value.empID, form.value.password);
   }
 }

@@ -1,13 +1,15 @@
+<div class="container">
 <mat-accordion mult="true" *ngIf="fwaList.length>0">
   <mat-expansion-panel *ngFor="let fwa of fwaList">
     <!--{{fwa | json}}-->
     <mat-expansion-panel-header>
-      {{fwaList.length}}
+      {{fwa.requestDate.toLocaleDateString()}}: {{fwaList.length}} Employees
     </mat-expansion-panel-header>
-    <p>{{fwa.requestDate}}</p>
-    <p>{{fwa.requestID}}</p>
+    <p>{{fwa.workType}}</p>
+    <p>{{fwa.employeeID}} {{employeeService.findEmpName(fwa.employeeID)}}</p>
     <p>{{Status[fwa.status]}}</p>
   </mat-expansion-panel>
 </mat-accordion>
 
 <p class="info-text mat-body 1" *ngIf="fwaList.length==0">No post added yet</p>
+</div>
