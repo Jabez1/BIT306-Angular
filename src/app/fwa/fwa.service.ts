@@ -61,7 +61,7 @@ export class FWAService {
     return previous;
   }, {} as Record<K, T[]>);
 
-  private groupedFwaList= this.groupBy(this.groupBy(this.fwaList, i=> i.employeeID), i => i.requestDate.toLocaleDateString());
+  private groupedFwaList= this.groupBy(this.fwaList, i => i.requestDate.toLocaleDateString());
   getFWAList(){
    return  this.fwaList;
   }
