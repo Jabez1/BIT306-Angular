@@ -2,9 +2,6 @@ import { Component } from '@angular/core';
 import { FWAService } from '../fwa.service';
 import { FWA, Status, WorkType } from "../fwa.model";
 import { EmployeeService } from 'src/app/emp/employee.service';
-import { Employee } from 'src/app/emp/employee.model';
-import { NgForm } from '@angular/forms';
-
 
 @Component({
   selector: 'app-fwaview',

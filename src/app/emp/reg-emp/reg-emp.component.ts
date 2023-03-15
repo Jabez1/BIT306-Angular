@@ -10,7 +10,6 @@ import { EmployeeService } from '../employee.service';
 })
 export class RegEmpComponent {
   readonly Positions = Object.keys(Position).filter(x => !isNaN(Number(x)));
-  //readonly Positions = Object.keys(Position).filter(x => typeof x !== "number");
   readonly Departments = Object.keys(this.employeeService.getDeptList());
   readonly objGetVal = Object.values;
   constructor(public employeeService: EmployeeService){}
@@ -30,7 +29,7 @@ export class RegEmpComponent {
     if (form.invalid){
       return;
     }
-    this.employeeService.addEmp(form.value.empID, form.value.name, form.value.position, form.value.email,
-      form.value.deptID, form.value.supID)
+    this.employeeService.addEmp(form.value.empID, form.value.name, form.value.deptID, form.value.position, form.value.email,
+       form.value.supID)
   }
 }
