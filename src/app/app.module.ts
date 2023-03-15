@@ -10,6 +10,8 @@ import { MatButtonModule  } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSelectModule } from '@angular/material/select';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 import { AppComponent } from './app.component';
 import { FwaFormComponent } from './fwa/fwaform/fwaform.component';
@@ -82,6 +84,8 @@ const appRoutes : Routes = [
     MatToolbarModule,
     MatSelectModule,
     MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     RouterModule.forRoot(
       appRoutes
     ),
