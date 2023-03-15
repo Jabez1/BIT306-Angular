@@ -45,7 +45,7 @@
       required
       ngModel
       #position ="ngModel">
-        <mat-option *ngFor="let pos of Positions as int" [value]="pos" >{{getVal(pos)}}</mat-option>
+        <mat-option *ngFor="let pos of Positions" [value]="pos" >{{getVal(pos)}}</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field>

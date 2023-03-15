@@ -8,22 +8,22 @@ export class EmployeeService {
 
   private empList: Employee[] = [
     {employeeID:'E001', password:'123', name:'Mike Wazowski', position: Position.Admin, email:'email@gmail.com',
-    FWAStatus:FWAStatus.None, Status: Status.NONE, comment:'',supervisorID: '',deptID: '' },
+    FWAStatus:FWAStatus.None, Status: Status.NONE, comment:'',supervisorID: '',deptID: 'D001' },
     {employeeID:'E002', password:'123', name:'John Lemon', position: Position.Supervisor, email:'email@gmail.com',
-    FWAStatus:FWAStatus.WorkFromHome, Status: Status.NONE, comment:'',supervisorID: '',deptID: '' },
+    FWAStatus:FWAStatus.WorkFromHome, Status: Status.NONE, comment:'',supervisorID: '',deptID: 'D001' },
     {employeeID:'E003', password:'123', name:'Selena Gomes', position: Position.Employee, email:'email@gmail.com',
-    FWAStatus:FWAStatus.Hybrid, Status: Status.NONE, comment:'',supervisorID: '',deptID: '' },
+    FWAStatus:FWAStatus.Hybrid, Status: Status.NONE, comment:'',supervisorID: '',deptID: 'D002' },
     {employeeID:'E004', password:'123', name:'Ryan Renold', position: Position.Employee, email:'email@gmail.com',
-    FWAStatus:FWAStatus.FlexiHour, Status: Status.NEW, comment:'',supervisorID: '',deptID: '' },
+    FWAStatus:FWAStatus.FlexiHour, Status: Status.NEW, comment:'',supervisorID: '',deptID: 'D002' },
     {employeeID:'E005', password:'123', name:'Kim John Un', position: Position.Employee, email:'email@gmail.com',
-    FWAStatus:FWAStatus.None, Status: Status.NONE, comment:'',supervisorID: '',deptID: '' }
+    FWAStatus:FWAStatus.None, Status: Status.NONE, comment:'',supervisorID: '',deptID: 'D003' }
   ];
 
   private deptList: Department[]=[
     {deptID: 'D001', deptName:'Human Resources'},
     {deptID: 'D002', deptName:'IT Management'},
-    {deptID: 'D003', deptName:'Transporation'}
-  ]
+    {deptID: 'D003', deptName:'Transportation'}
+  ];
 
   loggedInEmployee!: Employee;
 
@@ -43,8 +43,8 @@ export class EmployeeService {
     return undefined;
   }
 
-  addEmp(employeeID: string, position: Position, name:string, email:string,
-    deptID: string, supervisorID:string){
+  addEmp(employeeID: string,  name:string, deptID: string, position: Position, email:string,
+     supervisorID:string){
     const findEmp = this.empList.find(x => x.employeeID == employeeID);
     if(findEmp != undefined) {
       alert("Current Emp ID is in use, please select a new ID");
@@ -53,7 +53,7 @@ export class EmployeeService {
     else{
       const emp : Employee = {
         employeeID: employeeID,
-        password: "",
+        password: "123",
         name: name,
         position: position,
         email: email,
@@ -74,12 +74,14 @@ export class EmployeeService {
     if(emp == undefined){
       console.log("Cannot route undefined employee");
     }
-    else if(emp.position === Position.Admin){
+    else if(emp.position == Position.Admin){
       this.router.navigate(['/admin-home']);
-    } else if(emp.position === Position.Supervisor){
+    } else if(emp.position == Position.Supervisor){
       this.router.navigate(['/supervisor-home'])
-    } else if(emp.position === Position.Employee){
+    } else if(emp.position == Position.Employee){
       this.router.navigate(['/employee-home'])
+    } else{
+      console.log(emp.position);
     }
   }
 

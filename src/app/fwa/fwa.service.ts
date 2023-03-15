@@ -21,7 +21,7 @@ export class FWAService {
       workType: WorkType.FlexiHour,
       description: "Working completely face to face is impractical for me",
       reason: "My work does not require me to be in office for most days of the week",
-      status: Status.Accepted,
+      status: Status.Pending,
       comment: ""},
     {
       employeeID: "E003",
