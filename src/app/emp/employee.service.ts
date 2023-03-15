@@ -5,6 +5,7 @@ import { Router } from "@angular/router";
 @Injectable({providedIn: 'root'})
 
 export class EmployeeService {
+
   private empList: Employee[] = [
     {employeeID:'E001', password:'123', name:'Mike Wazowski', position: Position.Admin, email:'email@gmail.com',
     FWAStatus:FWAStatus.None, Status: Status.NONE, comment:'',supervisorID: '',deptID: '' },
@@ -26,27 +27,20 @@ export class EmployeeService {
 
   loggedInEmployee!: Employee;
 
-  login (employeeID: string, password: string) : boolean {
+  login (employeeID: string, password: string) : Employee | undefined {
 
     const emp = this.empList.find(x => x.employeeID == employeeID && x.password == password);
     const findID =  this.empList.find(x => x.employeeID == employeeID);
     // find will return undefined in case no matches found
     if(emp != undefined) {
       this.loggedInEmployee= emp;
-      if(emp.position === Position.Admin){
-        this.router.navigate(['/admin-home']);
-      } else if(emp.position === Position.Supervisor){
-        this.router.navigate(['/supervisor-home'])
-      } else if(emp.position === Position.Employee){
-        this.router.navigate(['/employee-home'])
-      }
-      return true;
+      return emp;
     }
     if(findID != undefined){
       alert("Incorrect password, please try again");
-    }
+    }else
     alert("User not found, please try again");
-    return false;
+    return undefined;
   }
 
   addEmp(employeeID: string, position: Position, name:string, email:string,
@@ -75,6 +69,32 @@ export class EmployeeService {
       return true;
     }
   }
+
+  routeEmp(emp: Employee){
+    if(emp == undefined){
+      console.log("Cannot route undefined employee");
+    }
+    else if(emp.position === Position.Admin){
+      this.router.navigate(['/admin-home']);
+    } else if(emp.position === Position.Supervisor){
+      this.router.navigate(['/supervisor-home'])
+    } else if(emp.position === Position.Employee){
+      this.router.navigate(['/employee-home'])
+    }
+  }
+
+  newEmpSetup(newPassword: string, empID : string){
+    const empIndex =  this.empList.findIndex(x => x.employeeID == empID);
+    const emp = this.empList[empIndex];
+    if(emp == undefined){
+      console.log("error");
+    }
+    else{
+      emp.password = newPassword;
+      emp.Status = Status.NONE;
+    }
+  }
+
   whoseLoggedIn(){
     return this.loggedInEmployee;
   }
@@ -95,5 +115,5 @@ export class EmployeeService {
     else
     return "";
   }
-  constructor(private router: Router ) { }
+  constructor(private router: Router) { }
  }

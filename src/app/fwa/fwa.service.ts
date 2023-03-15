@@ -17,7 +17,7 @@ export class FWAService {
     {
       employeeID: "E001",
       requestID: "R002",
-      requestDate: new Date("2023-02-16"),
+      requestDate: new Date("2023-01-16"),
       workType: WorkType.FlexiHour,
       description: "Working completely face to face is impractical for me",
       reason: "My work does not require me to be in office for most days of the week",
@@ -26,7 +26,7 @@ export class FWAService {
     {
       employeeID: "E003",
       requestID: "R003",
-      requestDate: new Date("2023-02-17"),
+      requestDate: new Date("2023-01-16"),
       workType: WorkType.Hybrid,
       description: "Some convenience",
       reason: "I do not have to be in office everyday",
@@ -35,7 +35,7 @@ export class FWAService {
     {
       employeeID: "E004",
       requestID: "R004",
-      requestDate: new Date("2023-02-20"),
+      requestDate: new Date("2023-02-1"),
       workType: WorkType.WorkFromHome,
       description: "Description",
       reason: "I hate the office",
@@ -62,8 +62,17 @@ export class FWAService {
   }, {} as Record<K, T[]>);
 
   private groupedFwaList= this.groupBy(this.fwaList, i => i.requestDate.toLocaleDateString());
+  private groupedFwaListWorkType= this.groupBy(this.fwaList, i => i.workType);
   getFWAList(){
    return  this.fwaList;
+  }
+
+  getGroupedFWAList(){
+    return this.groupedFwaList;
+  }
+
+  getGroupedFWAListWorkType(){
+    return this.groupedFwaListWorkType;
   }
 
    addFWA(workType : WorkType, description: string, reason : string){
@@ -80,11 +89,13 @@ export class FWAService {
    }
 
 
-   acceptFWA(reqID :string){
+   acceptFWA(reqID :string, comment: string){
     this.fwaList.find(x => x.requestID === reqID)!.status = Status.Accepted;
+    this.fwaList.find(x => x.requestID === reqID)!.comment= comment;
    }
 
-   rejectFWA(reqID :string){
+   rejectFWA(reqID :string, comment: string){
     this.fwaList.find(x => x.requestID === reqID)!.status = Status.Rejected;
+    this.fwaList.find(x => x.requestID === reqID)!.comment= comment;
    }
  }

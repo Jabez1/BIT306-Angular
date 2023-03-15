@@ -9,6 +9,7 @@ import { MatCardModule  } from '@angular/material/card';
 import { MatButtonModule  } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSelectModule } from '@angular/material/select';
+import {MatDialogModule} from '@angular/material/dialog';
 
 import { AppComponent } from './app.component';
 import { FwaFormComponent } from './fwa/fwaform/fwaform.component';
@@ -23,6 +24,7 @@ import { SupHomeComponent } from './user-homes/sup-home/sup-home.component';
 import { RegEmpComponent } from './emp/reg-emp/reg-emp.component';
 import { RevEmpScheduleComponent } from './emp-schedule/rev-emp-schedule/rev-emp-schedule.component';
 import { UpdateDailyScheduleComponent } from './emp-schedule/update-daily-schedule/update-daily-schedule.component';
+import { NewLoginComponent } from './emp/login/new-login/new-login.component';
 
 const appRoutes : Routes = [
 
@@ -67,6 +69,7 @@ const appRoutes : Routes = [
     RegEmpComponent,
     RevEmpScheduleComponent,
     UpdateDailyScheduleComponent,
+    NewLoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -78,6 +81,7 @@ const appRoutes : Routes = [
     MatButtonModule,
     MatToolbarModule,
     MatSelectModule,
+    MatDialogModule,
     RouterModule.forRoot(
       appRoutes
     ),

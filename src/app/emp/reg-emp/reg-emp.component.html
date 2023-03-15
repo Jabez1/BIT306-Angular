@@ -35,7 +35,7 @@
       required
       ngModel
       #deptID ="ngModel">
-        <mat-option *ngFor="let depts of Departments" [value]="depts" >{{depts}}</mat-option>
+        <mat-option *ngFor="let depts of Departments " [value]="getDeptVal(depts)" >{{getDeptValString(depts)}}</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field>

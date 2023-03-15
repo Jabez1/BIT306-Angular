@@ -1,15 +1,32 @@
 <div class="container">
-<mat-accordion mult="true" *ngIf="fwaList.length>0">
-  <mat-expansion-panel *ngFor="let fwa of fwaList">
-    <!--{{fwa | json}}-->
+  <div class="card-container">
+    <mat-card *ngFor="let worktypes of objKeys(groupedFWAListWorkType)" color="primary">
+      <mat-card-header>
+        {{worktypes}}
+      </mat-card-header>
+      <mat-card-content>
+      {{getCount(worktypes)}}
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <h1>Requests Made By Date</h1>
+<mat-accordion mult="true" *ngIf="groupedFWAList != null">
+  <mat-expansion-panel *ngFor="let fwa of objKeys(groupedFWAList)">
     <mat-expansion-panel-header>
-      {{fwa.requestDate.toLocaleDateString()}}
+      {{fwa}} | Count: {{getVal(fwa).length}}
     </mat-expansion-panel-header>
-    <p>{{fwa.workType}}</p>
-    <p>{{fwa.employeeID}} {{employeeService.findEmpName(fwa.employeeID)}}</p>
-    <p>{{Status[fwa.status]}}</p>
+    <div *ngFor="let fwa of getVal(fwa)">
+      <p>{{fwa.requestID}} {{employeeService.findEmpName(fwa.employeeID)}} {{fwa.employeeID}}
+
+      </p>
+      <p>
+        {{fwa.workType}}: {{Status[fwa.status]}} | {{fwa.comment}}
+      </p>
+      <hr>
+    </div>
+
   </mat-expansion-panel>
 </mat-accordion>
 
-<p class="info-text mat-body 1" *ngIf="fwaList.length==0">No post added yet</p>
+<p class="info-text mat-body 1" *ngIf="groupedFWAList == null">There are no FWA requests added yet</p>
 </div>

@@ -3,3 +3,34 @@
   width: 90%;
   margin-top:40px;
 }
+
+.card-container{
+  display:flex;
+  justify-content: space-evenly;
+  margin-bottom: 50px
+}
+mat-card{
+  width: 400px;
+  height: 150px;
+  color:white;
+  border-radius: 10px;
+}
+
+mat-card-content{
+  text-align: center;
+  font-size: 5em;
+}
+
+mat-card-header{
+  font-size: 2em;
+  margin:auto;
+  font-weight: 900;
+}
+
+mat-expansion-panel-header{
+  font-size: 1.2em;
+}
+mat-accordion p{
+  font-size: 1.5em;
+}
+

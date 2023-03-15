@@ -11,14 +11,21 @@ import { EmployeeService } from '../employee.service';
 export class RegEmpComponent {
   readonly Positions = Object.keys(Position).filter(x => !isNaN(Number(x)));
   //readonly Positions = Object.keys(Position).filter(x => typeof x !== "number");
-  readonly Departments = Object.keys(this.employeeService.getDeptList);
-
+  readonly Departments = Object.keys(this.employeeService.getDeptList());
+  readonly objGetVal = Object.values;
   constructor(public employeeService: EmployeeService){}
 
   getVal(key: any){
     return Position[key as keyof typeof Position];
   }
 
+  getDeptVal(key : any){
+    return this.employeeService.getDeptList()[key];
+  }
+  getDeptValString(key: any){
+    return this.employeeService.getDeptList()[key].deptID + " : "
+    + this.employeeService.getDeptList()[key].deptName;
+  }
   onEmpReg(form: NgForm){
     if (form.invalid){
       return;

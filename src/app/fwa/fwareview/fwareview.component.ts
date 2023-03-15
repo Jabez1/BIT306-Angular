@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FWAService } from '../fwa.service';
 import { FWA, Status, WorkType } from "../fwa.model";
+import { NgForm } from '@angular/forms'
 
 @Component({
   selector: 'app-fwareview',
@@ -12,26 +13,26 @@ export class FwaReviewComponent {
   readonly WorkType = WorkType;
 
   fwaList: FWA[] = [];
-  constructor(public fwaService: FWAService){
-
-  }
+  constructor(public fwaService: FWAService){}
   ngOnInit(){
     this.fwaList= this.fwaService.getFWAList().filter(x => x.status === Status.Pending);
   }
 
-  onFWASubmit(reqID: string, status: string){
+
+  onFWASubmit(reqID: string, status: string, form : NgForm){
     if (reqID == null){
       alert("error");
       return;
     }
     if(status== "accept"){
-      this.fwaService.acceptFWA(reqID);
+      this.fwaService.acceptFWA(reqID, form.value.comment);
     } else if(status== "reject"){
-      this.fwaService.rejectFWA(reqID);
+      this.fwaService.rejectFWA(reqID, form.value.comment);
     } else{
       alert("error2");
       return;
     }
     this.ngOnInit();
   }
+
 }
