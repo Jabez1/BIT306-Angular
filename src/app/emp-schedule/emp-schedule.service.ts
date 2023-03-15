@@ -1,4 +1,8 @@
-import { Injectable } from "@angular/core";
+import { Injectable, OnInit } from "@angular/core";
+import { Observable } from "rxjs";
+import { WorkHours } from "./emp-schedule.model";
+
+
 @Injectable({providedIn: 'root'})
 
 export class EmpScheduleService {
@@ -79,3 +83,11 @@ export class EmpScheduleService {
   //   this.fwaList.find(x => x.requestID === reqID)!.status = Status.Rejected;
   //  }
  }
+
+ 
+  
+ 
+
+ 
+
+ 
