@@ -38,4 +38,22 @@ app.post('/api/fwa', (req, res, next)=> {
   })
 });
 
+//add new employee
+app.post('api/emp', (req, res, next)=> {
+  console.log(req.body);
+  const emp = new EMP({
+    employeeID: req.body.employeeID,
+    fullName: req.body.fullName,
+    deptID: req.body.deptID,
+    position: req.body.position,
+    email: req.body.email,
+    supID: req.body.supID
+  });
+  emp.save();
+  console.log(emp);
+  res.status(201).json({
+    message: 'Employee added successfully' 
+  })
+});
+
 module.exports= app;
