@@ -1,9 +1,13 @@
 const http = require('http');
 const app = require('./back-end/app');
+var cors = require("cors");
+const apps = express();
 
 const port = 3000;
 
 app.set('port', port)
+app.use(cors());
+app.use(express.json());
 
 const server=  http.createServer(app);
 /*
