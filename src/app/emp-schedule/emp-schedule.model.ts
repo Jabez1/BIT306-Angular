@@ -5,6 +5,7 @@ export enum WorkHours {
 }
 
 export interface DailySchedule {
+  date: Date;
   employeeID: string;
   workLocation: string;
   workHours: WorkHours;

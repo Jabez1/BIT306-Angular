@@ -1,6 +1,6 @@
 <h1>Update daily schedule</h1>
 <mat-card>
-    <form>
+    <form (submit)="onEMPSubmit(update-daily-schedule)"#update-daily-schedule = "ngForm" method="get">
         <mat-form-field>
             <mat-label>Select date</mat-label>
             <input matInput [matDatepicker]="basicDatePicker" required>
@@ -10,7 +10,11 @@
         <br>
         <mat-form-field>
             <mat-label>Working hours</mat-label>
-            <mat-select required="">
+            <mat-select 
+            name="workHours"
+            required
+            ngModel
+            #workHours = "ngModel">
                 <mat-option value="1">8AM - 4PM</mat-option>
                 <mat-option value="2">9AM - 5PM</mat-option>
                 <mat-option value="3">10AM - 6PM</mat-option>
@@ -19,18 +23,24 @@
         <br>
         <mat-form-field>
             <mat-label>Working location</mat-label>
-            <input
+            <textarea
             matInput
             type="text"
-            required>
+            required
+            name="workLocation"
+            ngModel
+            #workLocation = "ngModel"></textarea>
         </mat-form-field>
         <br>
         <mat-form-field>
             <mat-label>Work report</mat-label>
-            <input
+            <textarea
             matInput
             type="text"
-            required>
+            required
+            name="workReport"
+            ngModel
+            #workReport = "ngModel"></textarea>
         </mat-form-field>
         <br>
         <div class="button-container">
