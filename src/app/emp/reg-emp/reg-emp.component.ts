@@ -30,6 +30,6 @@ export class RegEmpComponent {
       return;
     }
     this.employeeService.addEmp(form.value.empID, form.value.name, form.value.deptID, form.value.position, form.value.email,
-       form.value.supID)
+      form.value.supID)
   }
 }
