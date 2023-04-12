@@ -19,11 +19,12 @@ app.use((req, res,next) =>{
   next();
 });
 
+app.use(bodyParser.json());
+//FWA Functions
 app.post('/api/fwa', (req, res, next)=> {
   console.log(req.body);
   const fwa = new FWA({
     employeeID: req.body.employeeID,
-    requestID: req.body.requestID,
     requestDate: req.body.requestDate,
     workType: req.body.workType,
     description: req.body.description,
@@ -37,5 +38,15 @@ app.post('/api/fwa', (req, res, next)=> {
     message: 'FWA added successfully'
   })
 });
+
+app.get('/api/fwa', (req, res, next) =>{
+  FWA.find().then(documents => {
+    res.status(200).json({
+      message: 'FWA fetched successfully',
+      fwas: documents
+    })
+  })
+});
+
 
 module.exports= app;

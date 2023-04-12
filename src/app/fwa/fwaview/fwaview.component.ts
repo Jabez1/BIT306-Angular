@@ -38,6 +38,6 @@ export class FwaViewComponent {
   }
 
   ngOnInit(){
-    this.fwaList= this.fwaService.getFWAList();
+    //this.fwaList= this.fwaService.getFWAList();
   }
 }

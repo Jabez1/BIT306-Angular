@@ -9,8 +9,8 @@ export enum WorkType{
   Hybrid="Hybrid"
 }
 export interface FWA {
+  id: string;
   employeeID:string;
-  requestID: string;
   requestDate: Date;
   workType: WorkType;
   description: string;

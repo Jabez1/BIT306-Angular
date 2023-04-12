@@ -1,58 +1,19 @@
 import { FWA, WorkType, Status } from "./fwa.model";
 import { Injectable } from "@angular/core";
+import { HttpClient } from '@angular/common/http';
+import { Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Router } from '@angular/router'
 
 @Injectable({providedIn: 'root'})
 
 export class FWAService {
-  private fwaList: FWA[] = [
-    {
-      employeeID: "E002",
-      requestID: "R001",
-      requestDate: new Date("2023-01-16"),
-      workType: WorkType.WorkFromHome,
-      description: "Transportation issues",
-      reason: "I live in another country and wish to not fly back and forth each weekday every week",
-      status: Status.Pending,
-      comment: ""},
-    {
-      employeeID: "E001",
-      requestID: "R002",
-      requestDate: new Date("2023-01-16"),
-      workType: WorkType.FlexiHour,
-      description: "Working completely face to face is impractical for me",
-      reason: "My work does not require me to be in office for most days of the week",
-      status: Status.Pending,
-      comment: ""},
-    {
-      employeeID: "E003",
-      requestID: "R003",
-      requestDate: new Date("2023-01-16"),
-      workType: WorkType.Hybrid,
-      description: "Some convenience",
-      reason: "I do not have to be in office everyday",
-      status: Status.Pending,
-      comment: ""},
-    {
-      employeeID: "E004",
-      requestID: "R004",
-      requestDate: new Date("2023-02-1"),
-      workType: WorkType.WorkFromHome,
-      description: "Description",
-      reason: "I hate the office",
-      status: Status.Pending,
-      comment: ""
-    },
-    {
-      employeeID: "E005",
-      requestID: "R005",
-      requestDate: new Date(),
-      workType: WorkType.WorkFromHome,
-      description: "hi",
-      reason: "i am bed-ridden and my arms have fallen off",
-      status: Status.Pending,
-      comment: ""
-  }];
 
+  private fwaList: FWA[]=[];
+  private fwaListUpdated = new Subject<FWA[]>();
+  constructor(private http: HttpClient, private router: Router){}
+
+  //Group FWA for FWA Analytics
   groupBy = <T, K extends keyof any>(list: T[], getKey: (item: T) => K) =>
   list.reduce((previous, currentItem) => {
     const group = getKey(currentItem);
@@ -63,9 +24,7 @@ export class FWAService {
 
   private groupedFwaList= this.groupBy(this.fwaList, i => i.requestDate.toLocaleDateString());
   private groupedFwaListWorkType= this.groupBy(this.fwaList, i => i.workType);
-  getFWAList(){
-   return  this.fwaList;
-  }
+
 
   getGroupedFWAList(){
     return this.groupedFwaList;
@@ -75,27 +34,94 @@ export class FWAService {
     return this.groupedFwaListWorkType;
   }
 
-   addFWA(workType : WorkType, description: string, reason : string){
-     const fwaR : FWA = {
+  //Approve FWA
+  acceptFWA(fwaID :string, comment: string){
+    this.fwaList.find(x => x.id === fwaID)!.status = Status.Accepted;
+    this.fwaList.find(x => x.id === fwaID)!.comment= comment;
+  }
+
+  rejectFWA(fwaID :string, comment: string){
+  this.fwaList.find(x => x.id === fwaID)!.status = Status.Rejected;
+  this.fwaList.find(x => x.id === fwaID)!.comment= comment;
+  }
+
+
+  getFWA(id:string){
+    return {...this.fwaList.find(p=>p.id === id)};
+  }
+
+  //http FWA functions
+  getFWAList(){
+  this.http.get<{message: String, fwa: any}>('http://localhost:3000/api/fwa')
+    .pipe(map((fwaData) => {
+      return fwaData.fwa.map((fwa: { _id: any; employeeID: any; requestID: any; requestDate: any; workType: any; description: any; reason: any; status: any; comment: any; })=> {
+        return {
+          id:fwa._id,
+          employeeID: fwa.employeeID,
+          requestID: fwa.requestID,
+          requestDate: fwa.requestDate,
+          workType: fwa.workType,
+          description: fwa.description,
+          reason: fwa.reason,
+          status: fwa.status,
+          comment: fwa.comment
+        }
+      })
+    }))
+    .subscribe((transformedFWA) =>{
+      this.fwaList = transformedFWA;
+      this.fwaListUpdated.next([...this.fwaList]);
+    })
+  }
+
+   getFWAListUpdateListener(){
+    return this.fwaListUpdated.asObservable();
+   }
+
+  addFWA(workType : WorkType, description: string, reason : string){
+    const fwaReq : FWA = {
+      id: "",
       employeeID: "",
-      requestID: "test",
       requestDate: new Date(),
       workType: WorkType[workType as keyof typeof WorkType],
       description: description,
       reason: reason,
       status: Status.Pending,
       comment: ""};
-     this.fwaList.push(fwaR);
-   }
+    this.http
+    .post<{message:string}>('http://localhost:3000/api/fwa', fwaReq)
+    .subscribe((responseData) =>{
+      console.log(responseData.message);
+      this.fwaList.push(fwaReq);
+      this.fwaListUpdated.next([...this.fwaList])
+    });
+    //this.router.navigate(['/employee-home']);
+  }
 
-
-   acceptFWA(reqID :string, comment: string){
-    this.fwaList.find(x => x.requestID === reqID)!.status = Status.Accepted;
-    this.fwaList.find(x => x.requestID === reqID)!.comment= comment;
-   }
-
-   rejectFWA(reqID :string, comment: string){
-    this.fwaList.find(x => x.requestID === reqID)!.status = Status.Rejected;
-    this.fwaList.find(x => x.requestID === reqID)!.comment= comment;
-   }
+  deletePost(fwaID: string){
+    this.http.delete('http://localhost:3000/api/fwa/'+ fwaID)
+    .subscribe(()=>{
+      console.log("Deleted");
+      //this.router.navigate(['/supervisor-home']);
+    })
+  }
+  reviewFWA(fwaID: string, employeeID: string,
+    requestID: string, requestDate: Date,
+      workType : WorkType, description  : string, reason : string,
+      status: Status, comment: string){
+    const fwaReq : FWA = {
+      id: fwaID,
+      employeeID: employeeID,
+      requestDate: requestDate,
+      workType: WorkType[workType as keyof typeof WorkType],
+      description: description,
+      reason: reason,
+      status: status,
+      comment: comment};
+    this.http.put('http://localhost:3000/api/posts/'+ fwaID, fwaReq)
+    .subscribe(response =>{
+      console.log(response);
+      //this.router.navigate(['/']);
+    })
+  }
  }

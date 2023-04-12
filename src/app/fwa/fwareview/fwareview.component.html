@@ -3,7 +3,7 @@
   <mat-expansion-panel *ngFor="let fwa of fwaList">
     <!--{{fwa | json}}-->
     <mat-expansion-panel-header>
-      {{fwa.requestID}}
+      {{fwa.id}}
     </mat-expansion-panel-header>
     <p>Request Date: {{fwa.requestDate.toLocaleDateString()}}</p>
     <p>Description: {{fwa.description}}</p>
@@ -22,8 +22,8 @@
       <mat-error *ngIf="comment.invalid">Please enter a valid comment</mat-error>
     </mat-form-field>
     <div class="btn-container">
-    <button mat-raised-button color="accent" (click)="onFWASubmit(fwa.requestID, 'accept', fwaForm)">Approve</button>
-    <button mat-raised-button color="warn" (click)="onFWASubmit(fwa.requestID, 'reject', fwaForm)">Reject</button>
+    <button mat-raised-button color="accent" (click)="onFWASubmit(fwa.id, 'accept', fwaForm)">Approve</button>
+    <button mat-raised-button color="warn" (click)="onFWASubmit(fwa.id, 'reject', fwaForm)">Reject</button>
   </div>
   </form>
   </mat-expansion-panel>

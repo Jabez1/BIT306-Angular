@@ -16,7 +16,7 @@
       {{fwa}} | Count: {{getVal(fwa).length}}
     </mat-expansion-panel-header>
     <div *ngFor="let fwa of getVal(fwa)">
-      <p>{{fwa.requestID}} {{employeeService.findEmpName(fwa.employeeID)}} {{fwa.employeeID}}
+      <p>{{fwa.id}} {{employeeService.findEmpName(fwa.employeeID)}} {{fwa.employeeID}}
 
       </p>
       <p>

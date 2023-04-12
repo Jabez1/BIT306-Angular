@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule, Routes } from '@angular/router';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -9,9 +9,10 @@ import { MatCardModule  } from '@angular/material/card';
 import { MatButtonModule  } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSelectModule } from '@angular/material/select';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+//import { AuthInterceptor } from './auth/auth-interceptor';
 
 import { AppComponent } from './app.component';
 import { FwaFormComponent } from './fwa/fwaform/fwaform.component';
@@ -28,35 +29,6 @@ import { RevEmpScheduleComponent } from './emp-schedule/rev-emp-schedule/rev-emp
 import { UpdateDailyScheduleComponent } from './emp-schedule/update-daily-schedule/update-daily-schedule.component';
 import { NewLoginComponent } from './emp/login/new-login/new-login.component';
 
-const appRoutes : Routes = [
-
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
-  { path: 'admin-home', component: AdminHomeComponent ,
-      children: [
-        { path: '', redirectTo: 'regEmp', pathMatch: 'full' },
-        { path: 'regEmp', component: RegEmpComponent },
-        { path: 'fwaView', component: FwaViewComponent }
-      ]
-  },
-  { path: 'supervisor-home', component: SupHomeComponent ,
-      children: [
-        { path: '', redirectTo: 'fwaView', pathMatch: 'full' },
-        { path: 'fwaView', component: FwaViewComponent },
-        { path: 'revEmpSched', component: RevEmpScheduleComponent },
-        { path: 'fwaRev', component: FwaReviewComponent }
-      ]
-  },
-  { path: 'employee-home', component: EmpHomeComponent ,
-      children: [
-        { path: '', redirectTo: 'updateDailySchedule', pathMatch: 'full' },
-        { path: 'updateDailySchedule', component: UpdateDailyScheduleComponent },
-        { path: 'fwaReq', component: FwaFormComponent }
-      ]
-  }
-
-]
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -71,10 +43,11 @@ const appRoutes : Routes = [
     RegEmpComponent,
     RevEmpScheduleComponent,
     UpdateDailyScheduleComponent,
-    NewLoginComponent,
+    NewLoginComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
     MatExpansionModule,
@@ -86,10 +59,8 @@ const appRoutes : Routes = [
     MatDialogModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    RouterModule.forRoot(
-      appRoutes
-    ),
-    BrowserAnimationsModule
+    HttpClientModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
