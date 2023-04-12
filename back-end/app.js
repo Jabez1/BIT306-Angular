@@ -20,6 +20,7 @@ app.use((req, res,next) =>{
 });
 
 app.use(bodyParser.json());
+
 //FWA Functions
 app.post('/api/fwa', (req, res, next)=> {
   console.log(req.body);
@@ -43,11 +44,27 @@ app.get('/api/fwa', (req, res, next) =>{
   FWA.find().then(documents => {
     res.status(200).json({
       message: 'FWA fetched successfully',
-      fwas: documents
+      fwaList: documents
     })
   })
 });
 
+app.put('api/fwa/:id', (req, res, next) =>{
+  const fwa = new FWA({
+    _id: req.body.id,
+    employeeID: req.body.employeeID,
+    requestDate: req.body.requestDate,
+    workType: req.body.workType,
+    description: req.body.description,
+    reason: req.body.reason,
+    status: req.body.status,
+    comment: req.body.comment,
+  });
+  Post.updateOne({ _id: req.params.id }, fwa).then(result => {
+    console.log(result);
+    res.status(200).json({message : "Update successful!"});
+  })
+})
 
 //add new employee
 app.post('api/emp', (req, res, next)=> {

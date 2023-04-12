@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FWAService } from '../fwa.service';
 import { FWA, Status, WorkType } from "../fwa.model";
 import { EmployeeService } from 'src/app/emp/employee.service';
+import { Subscription } from 'rxjs/internal/Subscription';
 
 @Component({
   selector: 'app-fwaview',
@@ -24,11 +25,9 @@ export class FwaViewComponent {
   }
   objValues = Object.values;
 
-
-
   enumVal(enumKey: string) {
     return WorkType[enumKey as keyof typeof WorkType];
-   }
+  }
 
   fwaList: FWA[] = [];
   constructor(
@@ -37,7 +36,23 @@ export class FwaViewComponent {
 
   }
 
+  posts: FWA[] =[];
+  private fwaSub: Subscription | undefined;
   ngOnInit(){
-    //this.fwaList= this.fwaService.getFWAList();
+    this.fwaService.getFWAList();
+    this.fwaSub = this.fwaService.getFWAListUpdateListener()
+    .subscribe((fwaList: FWA[]) => {
+      this.fwaList = fwaList;
+    });
+    console.log(this.fwaSub);
   }
+  ngOnDestroy(){
+    this.fwaSub?.unsubscribe();
+  }
+
+  onDelete(postId: string){
+    this.fwaService.deletePost(postId);
+    //this.ngOnInit();
+  }
+
 }
