@@ -45,20 +45,18 @@ export class FWAService {
   this.fwaList.find(x => x.id === fwaID)!.comment= comment;
   }
 
-
   getFWA(id:string){
     return {...this.fwaList.find(p=>p.id === id)};
   }
 
   //http FWA functions
   getFWAList(){
-  this.http.get<{message: String, fwa: any}>('http://localhost:3000/api/fwa')
+  this.http.get<{message: String, fwaList: any}>('http://localhost:3000/api/fwa')
     .pipe(map((fwaData) => {
-      return fwaData.fwa.map((fwa: { _id: any; employeeID: any; requestID: any; requestDate: any; workType: any; description: any; reason: any; status: any; comment: any; })=> {
+      return fwaData.fwaList?.map((fwa: { _id: any; employeeID: any; requestDate: any; workType: any; description: any; reason: any; status: any; comment: any; })=> {
         return {
           id:fwa._id,
           employeeID: fwa.employeeID,
-          requestID: fwa.requestID,
           requestDate: fwa.requestDate,
           workType: fwa.workType,
           description: fwa.description,
@@ -69,6 +67,8 @@ export class FWAService {
       })
     }))
     .subscribe((transformedFWA) =>{
+      console.log(this.fwaList);
+      console.log(transformedFWA);
       this.fwaList = transformedFWA;
       this.fwaListUpdated.next([...this.fwaList]);
     })
