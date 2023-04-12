@@ -15,7 +15,7 @@ export class FwaReviewComponent {
   fwaList: FWA[] = [];
   constructor(public fwaService: FWAService){}
   ngOnInit(){
-    this.fwaList= this.fwaService.getFWAList().filter(x => x.status === Status.Pending);
+    this.fwaService.getFWAList();
   }
 
 
