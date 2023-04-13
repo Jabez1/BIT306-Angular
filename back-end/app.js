@@ -100,6 +100,7 @@ app.post('/api/employee/login', (req, res, next) => {
       {expiresIn: '1h'}
     );
     res.status(200).json({
+      emp: fetchedEmp,
       token: token
     })
     })

@@ -27,9 +27,10 @@ export class LoginComponent {
     }
     // else if(emp.Status == Status.NEW){
     //   this.openDialog();
-    // } else{
-    //   this.employeeService.routeEmp(emp);
-    //}
+    // }
+    else{
+      this.employeeService.routeEmp(emp);
+    }
   }
 
   openDialog() {

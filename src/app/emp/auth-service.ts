@@ -39,6 +39,7 @@ export class AuthService {
     this.http.post('http://localhost:3000/api/employee/signup', authData)
       .subscribe(response =>{
         console.log(response);
+        this.router.navigate(['/admin-home/fwaView']);
       });
   }
 
@@ -52,14 +53,29 @@ export class AuthService {
       comment: "",
       supervisorID: "",
       deptID : ""};
-    this.http.post<{token : string}>('http://localhost:3000/api/employee/login', authData)
+    this.http.post<{emp: Employee, token : string}>('http://localhost:3000/api/employee/login', authData)
       .subscribe(response => {
         const token = response.token;
         this.token = token;
         this.authStatusListener.next(true);
         console.log(response);
-        this.router.navigate(['/employee-home']);
+        this.routeEmp(response.emp);
       })
+  }
+
+  routeEmp(emp: Employee){
+    if(emp == undefined){
+      console.log("Cannot route undefined employee");
+    }
+    else if(emp.position == Position.Admin){
+      this.router.navigate(['/admin-home']);
+    } else if(emp.position == Position.Supervisor){
+      this.router.navigate(['/supervisor-home'])
+    } else if(emp.position == Position.Employee){
+      this.router.navigate(['/employee-home'])
+    } else{
+      console.log(emp.position);
+    }
   }
 
   logOut(){
