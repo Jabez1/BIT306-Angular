@@ -1,4 +1,4 @@
 <mat-toolbar color="primary" ><b><i>FlexIS</i></b>
   <a *ngIf = "!signedIn" routerLink="/login">
-  <span class="material-icons">logout</span>Log Out</a>
+  <span class="material-icons" (click)= "onLogOut()">logout</span>Log Out</a>
 </mat-toolbar>

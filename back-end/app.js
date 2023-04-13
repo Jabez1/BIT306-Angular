@@ -7,10 +7,8 @@ const bcrypt = require("bcrypt");
 const jwt = require('jsonwebtoken');
 const checkAuth = require('./middleware/check-auth');
 const app = express();
-var cors = require('cors')
 
 app.use(bodyParser.json());
-app.use(cors());
 
 mongoose.connect("mongodb+srv://jabez:QSzvM500U9d6NMJa@clusterf.t7ulcp1.mongodb.net/node-angular?retryWrites=true&w=majority")
   .then(()=> {
@@ -27,10 +25,8 @@ app.use((req, res,next) =>{
   next();
 });
 
-
-
 //FWA Functions
-app.post('/api/fwa', (req, res, next)=> {
+app.post('/api/fwa', checkAuth, (req, res, next)=> {
   console.log(req.body);
   const fwa = new FWA({
     employeeID: req.body.employeeID,
@@ -75,7 +71,6 @@ app.put('/api/fwa/:id', checkAuth, (req, res, next) =>{
 })
 
 //add new employee
-
 app.post('/api/employee/login', (req, res, next) => {
   let fetchedEmp;
   EMP.findOne({employeeID: req.body.employeeID})
@@ -96,7 +91,7 @@ app.post('/api/employee/login', (req, res, next) => {
       }
     const token = jwt.sign(
       {employeeID: fetchedEmp.employeeID, userId: fetchedEmp._id},
-      'secret_this_should_be_longer',
+      "pkey",
       {expiresIn: '1h'}
     );
     res.status(200).json({

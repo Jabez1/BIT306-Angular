@@ -2,8 +2,9 @@ const jwt = require('jsonwebtoken');
 
 module.exports = (req, res, next) =>{
   try{
+    let ret=""
     const token = req.headers.authorization.split(" ")[1];
-    jwt.verify(token, "secret_this_should_be_longer", ret);
+    jwt.verify(token, "pkey", ret);
     console.log("token: " , token);
     console.log("ret: " , token);
     next();

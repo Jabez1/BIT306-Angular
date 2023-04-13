@@ -31,8 +31,8 @@ export class RegEmpComponent {
     if (form.invalid){
       return;
     }
-    this.employeeService.addEmp(form.value.empID, form.value.name, form.value.deptID, form.value.position, form.value.email,
-      form.value.supID);
+    // this.employeeService.addEmp(form.value.empID, form.value.name, form.value.deptID, form.value.position, form.value.email,
+    //   form.value.supID);
     this.authService.createEmployee(form.value.empID, form.value.name, form.value.deptID.deptID, form.value.position,
       form.value.email,
       form.value.supID);

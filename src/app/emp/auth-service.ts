@@ -8,9 +8,9 @@ import { Subject } from 'rxjs';
 @Injectable({providedIn : 'root'})
 
 export class AuthService {
-  private token: string | undefined;
+  private isAuthenticated : boolean = false;
   private authStatusListener = new Subject<boolean>();
-
+  private token!: string;
   constructor(private http: HttpClient, private router: Router){}
 
   getToken(){
@@ -57,7 +57,10 @@ export class AuthService {
       .subscribe(response => {
         const token = response.token;
         this.token = token;
-        this.authStatusListener.next(true);
+        if(token){
+          this.isAuthenticated = true;
+          this.authStatusListener.next(true);
+        }
         console.log(response);
         this.routeEmp(response.emp);
       })
@@ -80,6 +83,7 @@ export class AuthService {
 
   logOut(){
     this.token = null!;
+    this.isAuthenticated = false;
     this.authStatusListener.next(false);
     this.router.navigate(['/login']);
   }

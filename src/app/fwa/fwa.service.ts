@@ -36,7 +36,6 @@ export class FWAService {
       })
     }))
     .subscribe((transformedFWA) =>{
-      console.log(transformedFWA);
       this.fwaList = transformedFWA;
       this.fwaListUpdated.next([...this.fwaList]);
     })
@@ -74,10 +73,10 @@ export class FWAService {
     })
   }
 
-    //Approve FWA
+  //Review FWA
   reviewFWA(fwaID: string, employeeID: string, requestDate: Date,
-      workType : WorkType, description  : string, reason : string,
-      status: Status, comment: string){
+    workType : WorkType, description  : string, reason : string,
+    status: Status, comment: string){
     const fwaReq : FWA = {
       id: fwaID,
       employeeID: employeeID,

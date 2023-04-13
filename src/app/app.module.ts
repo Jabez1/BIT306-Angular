@@ -12,7 +12,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-//import { AuthInterceptor } from './auth/auth-interceptor';
+import { AuthInterceptor } from './emp/auth-interceptor';
 
 import { AppComponent } from './app.component';
 import { FwaFormComponent } from './fwa/fwaform/fwaform.component';
@@ -62,7 +62,7 @@ import { NewLoginComponent } from './emp/login/new-login/new-login.component';
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

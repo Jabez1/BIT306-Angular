@@ -25,18 +25,20 @@ export class FwaReviewComponent {
     this.fwaListSub = this.fwaService.getFWAListUpdateListener()
     .subscribe((fwaList: FWA[]) => {
       this.fwaList = fwaList;
-      console.log(this.fwaList);
+      //console.log(this.fwaList);
     });
   }
 
 
   onFWASubmit(id: string, status: string, form : NgForm){
     console.log(form.value);
+    console.log(id);
     if (id == null){
       alert("error");
       return;
     }
     const fwa = this.fwaService.getFWA(id);
+    console.log(fwa);
     if(fwa == null){
       alert('error2');
       return;

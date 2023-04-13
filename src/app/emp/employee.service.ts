@@ -27,49 +27,49 @@ export class EmployeeService {
 
   loggedInEmployee!: Employee;
 
-  login (employeeID: string, password: string) : Employee | undefined {
+  // login (employeeID: string, password: string) : Employee | undefined {
 
-    const emp = this.empList.find(x => x.employeeID == employeeID && x.password == password);
-    const findID =  this.empList.find(x => x.employeeID == employeeID);
-    // find will return undefined in case no matches found
-    if(emp != undefined) {
-      this.loggedInEmployee= emp;
-      return emp;
-    }
-    if(findID != undefined){
-      alert("Incorrect password, please try again");
-    }else
-    alert("User not found, please try again");
-    return undefined;
-  }
+  //   const emp = this.empList.find(x => x.employeeID == employeeID && x.password == password);
+  //   const findID =  this.empList.find(x => x.employeeID == employeeID);
+  //   // find will return undefined in case no matches found
+  //   if(emp != undefined) {
+  //     this.loggedInEmployee= emp;
+  //     return emp;
+  //   }
+  //   if(findID != undefined){
+  //     alert("Incorrect password, please try again");
+  //   }else
+  //   alert("User not found, please try again");
+  //   return undefined;
+  // }
 
 
-  addEmp(employeeID: string,  name:string, deptID: string, position: Position, email:string,
-     supervisorID:string){
-    const findEmp = this.empList.find(x => x.employeeID == employeeID);
-    if(findEmp != undefined) {
-      alert("Current Emp ID is in use, please select a new ID");
-      return false;
-    }
-    else{
-      const emp : Employee = {
-        employeeID: employeeID,
-        password: "123",
-        name: name,
-        position: position,
-        email: email,
-        FWAStatus: FWAStatus.None,
-        Status: Status.NEW,
-        comment: "",
-        deptID: deptID,
-        supervisorID: supervisorID
-      };
-      this.empList.push(emp);
-      alert("Employee added successfully!");
-      this.router.navigate(['/admin-home/fwaView']);
-      return true;
-    }
-  }
+  // addEmp(employeeID: string,  name:string, deptID: string, position: Position, email:string,
+  //    supervisorID:string){
+  //   const findEmp = this.empList.find(x => x.employeeID == employeeID);
+  //   if(findEmp != undefined) {
+  //     alert("Current Emp ID is in use, please select a new ID");
+  //     return false;
+  //   }
+  //   else{
+  //     const emp : Employee = {
+  //       employeeID: employeeID,
+  //       password: "123",
+  //       name: name,
+  //       position: position,
+  //       email: email,
+  //       FWAStatus: FWAStatus.None,
+  //       Status: Status.NEW,
+  //       comment: "",
+  //       deptID: deptID,
+  //       supervisorID: supervisorID
+  //     };
+  //     this.empList.push(emp);
+  //     alert("Employee added successfully!");
+  //     this.router.navigate(['/admin-home/fwaView']);
+  //     return true;
+  //   }
+  // }
 
   routeEmp(emp: Employee){
     if(emp == undefined){
