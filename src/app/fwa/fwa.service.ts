@@ -13,37 +13,6 @@ export class FWAService {
   private fwaListUpdated = new Subject<FWA[]>();
   constructor(private http: HttpClient, private router: Router){}
 
-  //Group FWA for FWA Analytics
-  groupBy = <T, K extends keyof any>(list: T[], getKey: (item: T) => K) =>
-  list.reduce((previous, currentItem) => {
-    const group = getKey(currentItem);
-    if (!previous[group]) previous[group] = [];
-    previous[group].push(currentItem);
-    return previous;
-  }, {} as Record<K, T[]>);
-
-  private groupedFwaList= this.groupBy(this.fwaList, i => i.requestDate.toLocaleDateString());
-  private groupedFwaListWorkType= this.groupBy(this.fwaList, i => i.workType);
-
-
-  getGroupedFWAList(){
-    return this.groupedFwaList;
-  }
-
-  getGroupedFWAListWorkType(){
-    return this.groupedFwaListWorkType;
-  }
-
-  //Approve FWA
-  acceptFWA(fwaID :string, comment: string){
-    this.fwaList.find(x => x.id === fwaID)!.status = Status.Accepted;
-    this.fwaList.find(x => x.id === fwaID)!.comment= comment;
-  }
-
-  rejectFWA(fwaID :string, comment: string){
-  this.fwaList.find(x => x.id === fwaID)!.status = Status.Rejected;
-  this.fwaList.find(x => x.id === fwaID)!.comment= comment;
-  }
 
   getFWA(id:string){
     return {...this.fwaList.find(p=>p.id === id)};
@@ -67,16 +36,15 @@ export class FWAService {
       })
     }))
     .subscribe((transformedFWA) =>{
-      console.log(this.fwaList);
       console.log(transformedFWA);
       this.fwaList = transformedFWA;
       this.fwaListUpdated.next([...this.fwaList]);
     })
   }
 
-   getFWAListUpdateListener(){
-    return this.fwaListUpdated.asObservable();
-   }
+  getFWAListUpdateListener(){
+  return this.fwaListUpdated.asObservable();
+  }
 
   addFWA(workType : WorkType, description: string, reason : string){
     const fwaReq : FWA = {
@@ -98,15 +66,16 @@ export class FWAService {
     //this.router.navigate(['/employee-home']);
   }
 
-  deletePost(fwaID: string){
+  deleteFWA(fwaID: string){
     this.http.delete('http://localhost:3000/api/fwa/'+ fwaID)
     .subscribe(()=>{
       console.log("Deleted");
       //this.router.navigate(['/supervisor-home']);
     })
   }
-  reviewFWA(fwaID: string, employeeID: string,
-    requestID: string, requestDate: Date,
+
+    //Approve FWA
+  reviewFWA(fwaID: string, employeeID: string, requestDate: Date,
       workType : WorkType, description  : string, reason : string,
       status: Status, comment: string){
     const fwaReq : FWA = {
@@ -118,10 +87,10 @@ export class FWAService {
       reason: reason,
       status: status,
       comment: comment};
-    this.http.put('http://localhost:3000/api/posts/'+ fwaID, fwaReq)
+    this.http.put('http://localhost:3000/api/fwa/'+ fwaID, fwaReq)
     .subscribe(response =>{
       console.log(response);
-      //this.router.navigate(['/']);
+      this.router.navigate(['/supervisor-home']);
     })
   }
  }

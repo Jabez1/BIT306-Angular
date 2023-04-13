@@ -10,12 +10,14 @@ export class EmpScheduleService {
     private empList: DailySchedule[]=[];
     constructor(private http: HttpClient, private router: Router){}
 
-    addEmpSchedule( workLocation: string, workReport: string){
+    addEmpSchedule( workHours: string, workLocation: string, workReport: string){
         const empReq : DailySchedule = {
-            date: new Date,
-            workHours: WorkHours[workHours as keyof typeof WorkHours],
-            workLocation: workLocation,
-            workReport: workReport};
+          date: new Date,
+          employeeID: "",
+          supervisorComments: "",
+          workHours: WorkHours[workHours as keyof typeof WorkHours],
+          workLocation: workLocation,
+          workReport: workReport};
         this.http
         .post<{message:string}>('http://localhost:3000/api/emp-schedule',empReq)
         .subscribe((responseData) =>{

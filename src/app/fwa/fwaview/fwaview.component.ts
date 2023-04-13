@@ -13,8 +13,9 @@ export class FwaViewComponent {
   readonly Status = Status;
   readonly WorkType = WorkType;
   readonly empList = this.employeeService.getEmpList();
-  readonly groupedFWAList = this.fwaService.getGroupedFWAList();
-  readonly groupedFWAListWorkType = this.fwaService.getGroupedFWAListWorkType();
+  private fwaListSub: Subscription | undefined;
+  groupedFWAList: any;
+  groupedFWAListWorkType : any;
 
   objKeys = Object.keys;
   getVal(key : any){
@@ -33,26 +34,41 @@ export class FwaViewComponent {
   constructor(
     public fwaService: FWAService,
     public employeeService: EmployeeService){
-
   }
 
-  posts: FWA[] =[];
-  private fwaSub: Subscription | undefined;
+  //Group FWA for FWA Analytics
+  groupBy = <T, K extends keyof any>(list: T[], getKey: (item: T) => K) =>
+  list.reduce((previous, currentItem) => {
+    const group = getKey(currentItem);
+    if (!previous[group]) previous[group] = [];
+    previous[group].push(currentItem);
+    return previous;
+  }, {} as Record<K, T[]>);
+
+  getGroupedFWAList(){
+    return this.groupedFWAList;
+  }
+
+  getGroupedFWAListWorkType(){
+    return this.groupedFWAListWorkType;
+  }
+
   ngOnInit(){
     this.fwaService.getFWAList();
-    this.fwaSub = this.fwaService.getFWAListUpdateListener()
+    this.fwaListSub = this.fwaService.getFWAListUpdateListener()
     .subscribe((fwaList: FWA[]) => {
       this.fwaList = fwaList;
+      this.groupedFWAList = this.groupBy(this.fwaList, i =>
+        new Date(i.requestDate).toLocaleDateString());
+      this.groupedFWAListWorkType = this.groupBy(this.fwaList, i => i.workType);
+      // console.log(this.fwaList);
+      // console.log(this.getGroupedFWAList());
+      // console.log(this.getGroupedFWAListWorkType());
     });
-    console.log(this.fwaSub);
   }
   ngOnDestroy(){
-    this.fwaSub?.unsubscribe();
+    this.fwaListSub?.unsubscribe();
   }
 
-  onDelete(postId: string){
-    this.fwaService.deletePost(postId);
-    //this.ngOnInit();
-  }
 
 }

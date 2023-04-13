@@ -7,16 +7,16 @@ import { Router } from "@angular/router";
 export class EmployeeService {
 
   private empList: Employee[] = [
-    {employeeID:'E001', password:'123', name:'Mike Wazowski', position: Position.Admin, email:'email@gmail.com',
-    FWAStatus:FWAStatus.None, Status: Status.NONE, comment:'',supervisorID: '',deptID: 'D001' },
-    {employeeID:'E002', password:'123', name:'John Lemon', position: Position.Supervisor, email:'email@gmail.com',
-    FWAStatus:FWAStatus.WorkFromHome, Status: Status.NONE, comment:'',supervisorID: '',deptID: 'D001' },
-    {employeeID:'E003', password:'123', name:'Selena Gomes', position: Position.Employee, email:'email@gmail.com',
-    FWAStatus:FWAStatus.Hybrid, Status: Status.NONE, comment:'',supervisorID: '',deptID: 'D002' },
-    {employeeID:'E004', password:'123', name:'Ryan Renold', position: Position.Employee, email:'email@gmail.com',
-    FWAStatus:FWAStatus.FlexiHour, Status: Status.NEW, comment:'',supervisorID: '',deptID: 'D002' },
-    {employeeID:'E005', password:'123', name:'Kim John Un', position: Position.Employee, email:'email@gmail.com',
-    FWAStatus:FWAStatus.None, Status: Status.NONE, comment:'',supervisorID: '',deptID: 'D003' }
+    // {employeeID:'E001', password:'123', name:'Mike Wazowski', position: Position.Admin, email:'email@gmail.com',
+    // FWAStatus:FWAStatus.None, Status: Status.NONE, comment:'',supervisorID: '',deptID: 'D001' },
+    // {employeeID:'E002', password:'123', name:'John Lemon', position: Position.Supervisor, email:'email@gmail.com',
+    // FWAStatus:FWAStatus.WorkFromHome, Status: Status.NONE, comment:'',supervisorID: '',deptID: 'D001' },
+    // {employeeID:'E003', password:'123', name:'Selena Gomes', position: Position.Employee, email:'email@gmail.com',
+    // FWAStatus:FWAStatus.Hybrid, Status: Status.NONE, comment:'',supervisorID: '',deptID: 'D002' },
+    // {employeeID:'E004', password:'123', name:'Ryan Renold', position: Position.Employee, email:'email@gmail.com',
+    // FWAStatus:FWAStatus.FlexiHour, Status: Status.NEW, comment:'',supervisorID: '',deptID: 'D002' },
+    // {employeeID:'E005', password:'123', name:'Kim John Un', position: Position.Employee, email:'email@gmail.com',
+    // FWAStatus:FWAStatus.None, Status: Status.NONE, comment:'',supervisorID: '',deptID: 'D003' }
   ];
 
   private deptList: Department[]=[
@@ -42,6 +42,7 @@ export class EmployeeService {
     alert("User not found, please try again");
     return undefined;
   }
+
 
   addEmp(employeeID: string,  name:string, deptID: string, position: Position, email:string,
      supervisorID:string){

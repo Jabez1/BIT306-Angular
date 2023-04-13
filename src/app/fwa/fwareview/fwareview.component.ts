@@ -25,22 +25,32 @@ export class FwaReviewComponent {
     this.fwaListSub = this.fwaService.getFWAListUpdateListener()
     .subscribe((fwaList: FWA[]) => {
       this.fwaList = fwaList;
+      console.log(this.fwaList);
     });
-    console.log(this.fwaList);
   }
 
 
-  onFWASubmit(reqID: string, status: string, form : NgForm){
-    if (reqID == null){
+  onFWASubmit(id: string, status: string, form : NgForm){
+    console.log(form.value);
+    if (id == null){
       alert("error");
       return;
     }
+    const fwa = this.fwaService.getFWA(id);
+    if(fwa == null){
+      alert('error2');
+      return;
+    }
     if(status== "accept"){
-      this.fwaService.acceptFWA(reqID, form.value.comment);
+      this.fwaService.reviewFWA(fwa.id!, fwa.employeeID!, fwa.requestDate!,
+        fwa.workType!, fwa.description!, fwa.reason!,
+        Status.Accepted,form.value.comment);
     } else if(status== "reject"){
-      this.fwaService.rejectFWA(reqID, form.value.comment);
+      this.fwaService.reviewFWA(fwa.id!, fwa.employeeID!, fwa.requestDate!,
+        fwa.workType!, fwa.description!, fwa.reason!,
+        Status.Rejected,form.value.comment);
     } else{
-      alert("error2");
+      alert("error3");
       return;
     }
     this.ngOnInit();
