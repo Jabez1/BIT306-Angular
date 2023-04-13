@@ -101,9 +101,7 @@ export class EmployeeService {
   whoseLoggedIn(){
     return this.loggedInEmployee;
   }
-  logout(){
-    this.loggedInEmployee = { employeeID:'', password:'', name:'', position: Position.Employee, email:'', FWAStatus:FWAStatus.None, Status: Status.NONE, comment:'',supervisorID: '',deptID: '' };
-  }
+
   getDeptList(){
     return this.deptList;
   }

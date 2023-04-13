@@ -3,7 +3,7 @@
   <mat-expansion-panel *ngFor="let fwa of fwaList">
     <!--{{fwa | json}}-->
     <mat-expansion-panel-header>
-      {{fwa.id}}
+      EmpID {{fwa.employeeID}} |  FWA ID: {{fwa.id}}
     </mat-expansion-panel-header>
     <p>Request Date: {{getDateStr(fwa.requestDate)}}</p>
     <p>Description: {{fwa.description}}</p>

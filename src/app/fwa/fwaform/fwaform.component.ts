@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { WorkType } from '../fwa.model';
 import { FWAService } from '../fwa.service';
 import { NgForm } from '@angular/forms';
+import { AuthService } from 'src/app/emp/auth-service';
+import { Employee } from 'src/app/emp/employee.model';
 
 @Component({
   selector: 'app-fwaform',
@@ -12,7 +14,7 @@ import { NgForm } from '@angular/forms';
 export class FwaFormComponent {
   readonly WorkTypes = WorkType;
   readonly WorkTypeKeys = Object.keys(WorkType);
-  constructor(public fwaService: FWAService){}
+  constructor(public fwaService: FWAService, public authService: AuthService){}
 
   getVal(key: any){
     return WorkType[key as keyof typeof WorkType];
@@ -22,6 +24,6 @@ export class FwaFormComponent {
     if (form.invalid){
       return;
     }
-    this.fwaService.addFWA(form.value.workType, form.value.description, form.value.reason)
+    this.fwaService.addFWA(this.authService.getLoggedInEmpID(), form.value.workType, form.value.description, form.value.reason)
   }
 }

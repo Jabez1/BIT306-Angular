@@ -24,11 +24,10 @@ export class FwaReviewComponent {
     this.fwaService.getFWAList();
     this.fwaListSub = this.fwaService.getFWAListUpdateListener()
     .subscribe((fwaList: FWA[]) => {
-      this.fwaList = fwaList;
+      this.fwaList = fwaList.filter(x => x.status === Status.Pending);
       //console.log(this.fwaList);
     });
   }
-
 
   onFWASubmit(id: string, status: string, form : NgForm){
     console.log(form.value);

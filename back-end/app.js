@@ -136,4 +136,28 @@ app.post('/api/employee/signup', (req, res, next) => {
     });
 })
 
+app.put('/api/employee/:id', checkAuth, (req, res, next) =>{
+  bcrypt.hash(req.body.password, 10)
+  .then(hash =>{
+    const  employee = new EMP({
+      _id: req.body.id,
+      employeeID: req.body.employeeID,
+      password: hash,
+      fullName: req.body.fullName,
+      deptID: req.body.deptID,
+      position: req.body.position,
+      email: req.body.email,
+      FWAStatus: req.body.FWAStatus,
+      Status: req.body.Status,
+      comment: req.body.comment,
+      supID: req.body.supID
+    });
+    EMP.updateOne({ _id: req.params.id }, employee).then(result => {
+      console.log(result);
+      res.status(200).json({message : "Update successful!", result: result});
+  })
+})
+})
+
+
 module.exports= app;

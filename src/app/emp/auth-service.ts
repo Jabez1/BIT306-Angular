@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Employee , Position, FWAStatus, Status } from './employee.model';
 import { Router } from '@angular/router';
-
+import { NewLoginComponent } from './login/new-login/new-login.component';
+import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
@@ -11,7 +12,8 @@ export class AuthService {
   private isAuthenticated : boolean = false;
   private authStatusListener = new Subject<boolean>();
   private token!: string;
-  constructor(private http: HttpClient, private router: Router){}
+  private loggedInEmp !: any;
+  constructor(private http: HttpClient, public dialog: MatDialog, private router: Router){}
 
   getToken(){
     return this.token;
@@ -21,9 +23,14 @@ export class AuthService {
     return this.authStatusListener.asObservable();
   }
 
+  getLoggedInEmpID(){
+    return this.loggedInEmp.employeeID;
+  }
+
   createEmployee(employeeID: string, fullName : string, deptID : string, position: Position,
     email :string, supervisorID: string){
     const authData: Employee = {
+      id:"",
       employeeID: employeeID,
       password: "123",
       name: fullName,
@@ -44,7 +51,9 @@ export class AuthService {
   }
 
   login(employeeID: string, password:string){
-    const authData: Employee = {employeeID:employeeID, password:password,
+    const authData: Employee = {
+      id:"",
+      employeeID:employeeID, password:password,
       name: "",
       position: Position.Employee,
       email: "",
@@ -53,7 +62,7 @@ export class AuthService {
       comment: "",
       supervisorID: "",
       deptID : ""};
-    this.http.post<{emp: Employee, token : string}>('http://localhost:3000/api/employee/login', authData)
+    this.http.post<{emp: any, token : string}>('http://localhost:3000/api/employee/login', authData)
       .subscribe(response => {
         const token = response.token;
         this.token = token;
@@ -62,8 +71,36 @@ export class AuthService {
           this.authStatusListener.next(true);
         }
         console.log(response);
-        this.routeEmp(response.emp);
+        this.loggedInEmp= response.emp;
+        if(this.loggedInEmp.Status == Status.NEW){
+          console.log(this.loggedInEmp._id);
+          this.openDialog();
+        }
+        else{
+          this.routeEmp(response.emp);
+        }
       })
+  }
+
+  newEmpSetup(newPassword: string){
+    const emp : Employee = {
+      id: this.loggedInEmp._id,
+      employeeID: this.loggedInEmp.employeeID,
+      password: newPassword,
+      name: this.loggedInEmp.name,
+      position: this.loggedInEmp.position,
+      email: this.loggedInEmp.email,
+      FWAStatus: this.loggedInEmp.FWAStatus,
+      Status: Status.NONE,
+      comment: this.loggedInEmp.comment,
+      supervisorID: this.loggedInEmp.supervisorID,
+      deptID : this.loggedInEmp.deptID};
+    console.log(emp);
+    this.http.put('http://localhost:3000/api/employee/'+ emp.id, emp)
+    .subscribe(response =>{
+      console.log(response);
+      this.routeEmp(emp);
+    })
   }
 
   routeEmp(emp: Employee){
@@ -79,6 +116,17 @@ export class AuthService {
     } else{
       console.log(emp.position);
     }
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(NewLoginComponent, {
+      height: '320px',
+      width: '500px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
   logOut(){

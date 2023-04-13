@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { EmployeeService } from '../employee.service';
-import { NewLoginComponent } from '../login/new-login/new-login.component';
-import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Employee, Status, Position} from '../employee.model';
 import { AuthService } from "../auth-service";
 
@@ -14,7 +12,7 @@ import { AuthService } from "../auth-service";
 })
 export class LoginComponent {
 
-  constructor(public employeeService: EmployeeService,public dialog: MatDialog, public authService: AuthService){}
+  constructor(public employeeService: EmployeeService, public authService: AuthService){}
 
 
   login(form : NgForm){
@@ -33,14 +31,5 @@ export class LoginComponent {
     }
   }
 
-  openDialog() {
-    const dialogRef = this.dialog.open(NewLoginComponent, {
-      height: '320px',
-      width: '500px',
-    });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-  }
 }

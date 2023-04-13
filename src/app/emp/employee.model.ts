@@ -17,6 +17,7 @@ export enum Status{
 }
 
 export interface Employee {
+  id: string;
   employeeID: string;
   password: string;
   name: string;

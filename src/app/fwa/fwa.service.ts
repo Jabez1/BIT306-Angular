@@ -45,10 +45,10 @@ export class FWAService {
   return this.fwaListUpdated.asObservable();
   }
 
-  addFWA(workType : WorkType, description: string, reason : string){
+  addFWA(employeeID : string, workType : WorkType, description: string, reason : string){
     const fwaReq : FWA = {
       id: "",
-      employeeID: "",
+      employeeID: employeeID,
       requestDate: new Date(),
       workType: WorkType[workType as keyof typeof WorkType],
       description: description,
@@ -62,7 +62,7 @@ export class FWAService {
       this.fwaList.push(fwaReq);
       this.fwaListUpdated.next([...this.fwaList])
     });
-    //this.router.navigate(['/employee-home']);
+    this.router.navigate(['/employee-home']);
   }
 
   deleteFWA(fwaID: string){
