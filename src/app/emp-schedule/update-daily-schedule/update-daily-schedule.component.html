@@ -1,6 +1,6 @@
 <h1>Update daily schedule</h1>
 <mat-card>
-    <form (submit)="onEMPSubmit(update-daily-schedule)"#update-daily-schedule = "ngForm" method="get">
+    <form method="get">
         <mat-form-field>
             <mat-label>Select date</mat-label>
             <input matInput [matDatepicker]="basicDatePicker" required>
