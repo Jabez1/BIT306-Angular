@@ -106,7 +106,6 @@ export class AuthService {
           this.isAuthenticated = true;
           this.authStatusListener.next(true);
         }
-        console.log(response);
         this.loggedInEmp= response.emp;
         if(this.loggedInEmp.Status == Status.NEW){
           console.log(this.loggedInEmp._id);

@@ -37,9 +37,9 @@ export class FwaViewComponent {
     public authService: AuthService){
   }
 
-  getDeptVal(key : any){
-    return this.employeeService.getDeptList()[key];
-  }
+  //functions to populate the mat-select in the html page
+  getDeptVal(key : any){ return this.employeeService.getDeptList()[key]; }
+
   getDeptValString(key: any){
     return this.employeeService.getDeptList()[key].deptID + " : "
     + this.employeeService.getDeptList()[key].deptName;
@@ -48,15 +48,14 @@ export class FwaViewComponent {
   getVal(key : any){
     return this.groupedFWAList[key];
   }
-  getCount(key : any){
-  return this.groupedFWAListWorkType[key as WorkType].length;
-  }
 
+  getCount(key : any){
+    return this.groupedFWAListWorkType[key as WorkType].length;
+  }
 
   enumVal(enumKey: string) {
     return WorkType[enumKey as keyof typeof WorkType];
   }
-
 
   //Group FWA for FWA Analytics
   groupBy = <T, K extends keyof any>(list: T[], getKey: (item: T) => K) =>
@@ -110,9 +109,6 @@ export class FwaViewComponent {
         new Date(i.requestDate).toLocaleDateString());
       //groups FWAList by work type
       this.groupedFWAListWorkType = this.groupBy(this.fwaList, i => i.workType);
-      // console.log(this.fwaList);
-      // console.log(this.getGroupedFWAList());
-      // console.log(this.getGroupedFWAListWorkType());
     });
     //initialize emp list to filter FWAs
     this.authService.getEmpList();
@@ -121,6 +117,7 @@ export class FwaViewComponent {
       this.empList = empList;
     })
     //finds the user Department ID and sets the page Department ID
+    if(this.authService.getLoggedInEmp())
     this.defaultDept = this.authService.getLoggedInEmp().deptID;
   }
 
@@ -139,5 +136,6 @@ export class FwaViewComponent {
 
   ngOnDestroy(){
     this.fwaListSub?.unsubscribe();
+    this.empListSub?.unsubscribe();
   }
 }
