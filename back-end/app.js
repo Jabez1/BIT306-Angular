@@ -89,20 +89,17 @@ app.post('/api/employee/login', (req, res, next) => {
           message: 'Auth failed - password didnt match'
         })
       }
-    const token = jwt.sign(
-      {employeeID: fetchedEmp.employeeID, userId: fetchedEmp._id},
-      "pkey",
-      {expiresIn: '1h'}
-    );
-    res.status(200).json({
-      emp: fetchedEmp,
-      token: token
-    })
-    })
-    .catch (err =>{
-      return res.status(401).json({
-        message: 'Auth failed'
-      })
+      if(fetchedEmp){
+        const token = jwt.sign(
+          {employeeID: fetchedEmp.employeeID, userId: fetchedEmp._id},
+          "pkey",
+          {expiresIn: '1h'}
+        );
+        res.status(200).json({
+          emp: fetchedEmp,
+          token: token
+        })
+      }
     })
 });
 
@@ -159,5 +156,13 @@ app.put('/api/employee/:id', checkAuth, (req, res, next) =>{
 })
 })
 
+app.get('/api/employee/find', (req, res, next) =>{
+  EMP.find().then(documents => {
+  res.status(200).json({
+    message: 'FWA fetched successfully',
+    empList: documents
+  })
+})
+});
 
 module.exports= app;

@@ -98,16 +98,13 @@ export class EmployeeService {
     }
   }
 
-  whoseLoggedIn(){
-    return this.loggedInEmployee;
-  }
-
   getDeptList(){
     return this.deptList;
   }
   getEmpList(){
     return this.empList;
   }
+
   findEmpName(employeeID :string){
     const findEmp = this.empList.find(x => x.employeeID == employeeID);
     if(findEmp != undefined) {

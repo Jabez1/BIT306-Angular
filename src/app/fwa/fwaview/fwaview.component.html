@@ -1,6 +1,20 @@
 <div class="container">
+  <form>
+    <mat-form-field>
+    <mat-label>Department ID</mat-label>
+    <mat-select
+    name="deptID"
+    [ngModel]="defaultDept"
+    #deptID ="ngModel"
+    (selectionChange)="filterByDept($event)"
+    [disabled]= "!(getLoggedInEmpPos()  == Position.Admin)">
+      <mat-option  [value]= undefined >Select All</mat-option>
+      <mat-option *ngFor="let depts of Departments " [value]="getDeptVal(depts).deptID">{{getDeptValString(depts)}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  </form>
   <div class="card-container">
-    <mat-card *ngFor="let worktypes of objKeys(groupedFWAListWorkType)" color="primary">
+    <mat-card *ngFor="let worktypes of objKeys(groupedFWAListWorkType || {})" color="primary">
       <mat-card-header>
         {{worktypes}}
       </mat-card-header>
@@ -16,8 +30,10 @@
       {{fwa}} | Count: {{getVal(fwa).length}}
     </mat-expansion-panel-header>
     <div *ngFor="let fwa of getVal(fwa)">
-      <p>{{fwa.id}} {{employeeService.findEmpName(fwa.employeeID)}} {{fwa.employeeID}}
-
+      <p>Name: {{findEmp(fwa.employeeID)?.name}} | Emp ID: {{fwa.employeeID}}
+      </p>
+      <p>
+        FWA ID: {{fwa.id}}
       </p>
       <p>
         {{fwa.workType}}: {{Status[fwa.status]}} | {{fwa.comment}}
@@ -28,5 +44,5 @@
   </mat-expansion-panel>
 </mat-accordion>
 
-<p class="info-text mat-body 1" *ngIf="groupedFWAList == null">There are no FWA requests added yet</p>
+<p class="info-text mat-body 1" *ngIf="fwaList.length == 0 ">There are no FWA requests added to this department yet</p>
 </div>

@@ -24,6 +24,6 @@ export class FwaFormComponent {
     if (form.invalid){
       return;
     }
-    this.fwaService.addFWA(this.authService.getLoggedInEmpID(), form.value.workType, form.value.description, form.value.reason)
+    this.fwaService.addFWA(this.authService.getLoggedInEmp().employeeID, form.value.workType, form.value.description, form.value.reason)
   }
 }

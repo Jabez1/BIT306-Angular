@@ -1,7 +1,7 @@
 .container{
   margin:auto;
   width: 90%;
-  margin-top:40px;
+  margin-top:20px;
 }
 
 .card-container{
@@ -34,3 +34,11 @@ mat-accordion p{
   font-size: 1.5em;
 }
 
+form{
+  display: flex;
+  justify-content: end;
+}
+
+mat-form-field{
+  width: 300px;
+}

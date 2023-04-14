@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { NewLoginComponent } from './login/new-login/new-login.component';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Injectable({providedIn : 'root'})
@@ -13,6 +14,9 @@ export class AuthService {
   private authStatusListener = new Subject<boolean>();
   private token!: string;
   private loggedInEmp !: any;
+
+  private empList: Employee[]=[];
+  private empListUpdated = new Subject<Employee[]>();
   constructor(private http: HttpClient, public dialog: MatDialog, private router: Router){}
 
   getToken(){
@@ -23,8 +27,8 @@ export class AuthService {
     return this.authStatusListener.asObservable();
   }
 
-  getLoggedInEmpID(){
-    return this.loggedInEmp.employeeID;
+  getLoggedInEmp(){
+    return this.loggedInEmp;
   }
 
   createEmployee(employeeID: string, fullName : string, deptID : string, position: Position,
@@ -50,10 +54,42 @@ export class AuthService {
       });
   }
 
+  getEmpList(){
+    this.http.get<{message: String, empList: any}>('http://localhost:3000/api/employee/find')
+    .pipe(map((empData) => {
+      return empData.empList?.map((emp: { _id: any; employeeID: any; password: any; fullName : any;
+        deptID : any; position: any; FWAStatus : any; Status: any; comment: any;
+    email :any; supervisorID: string; })=> {
+        return {
+          id:emp._id,
+          employeeID: emp.employeeID,
+          password: emp.password,
+          name: emp.fullName,
+          position: emp.position,
+          email: emp.email,
+          FWAStatus: emp.FWAStatus,
+          Status: emp.Status,
+          comment: emp.comment || "",
+          supervisorID: emp.supervisorID || "",
+          deptID : emp.deptID
+        }
+      })
+    }))
+    .subscribe((transformedEmp) =>{
+      this.empList = transformedEmp;
+      this.empListUpdated.next([...this.empList]);
+    })
+  }
+
+  getEmpListUpdateListener(){
+    return this.empListUpdated.asObservable();
+  }
+
   login(employeeID: string, password:string){
     const authData: Employee = {
       id:"",
-      employeeID:employeeID, password:password,
+      employeeID:employeeID,
+      password:password,
       name: "",
       position: Position.Employee,
       email: "",
