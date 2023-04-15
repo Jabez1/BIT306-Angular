@@ -20,7 +20,9 @@ export class FwaReviewComponent {
   fwaList: FWA[] = [];
   private fwaListSub: Subscription | undefined;
   constructor(public fwaService: FWAService){}
+
   ngOnInit(){
+    //Gets the FWAList but immediately filters it by those with a Pending Status
     this.fwaService.getFWAList();
     this.fwaListSub = this.fwaService.getFWAListUpdateListener()
     .subscribe((fwaList: FWA[]) => {
@@ -30,8 +32,6 @@ export class FwaReviewComponent {
   }
 
   onFWASubmit(id: string, status: string, form : NgForm){
-    console.log(form.value);
-    console.log(id);
     if (id == null){
       alert("error");
       return;

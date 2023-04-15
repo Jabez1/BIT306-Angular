@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const fwaSchema = mongoose.Schema({
-  employeeID: {type: String}, //required
+  employeeID: {type: String, required: true},
   requestDate: {type: Date, required: true},
   workType:{type: String, required: true},
   description: {type: String, required: true},

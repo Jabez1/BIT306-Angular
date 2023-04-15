@@ -22,7 +22,8 @@ export class FWAService {
   getFWAList(){
   this.http.get<{message: String, fwaList: any}>('http://localhost:3000/api/fwa')
     .pipe(map((fwaData) => {
-      return fwaData.fwaList?.map((fwa: { _id: any; employeeID: any; requestDate: any; workType: any; description: any; reason: any; status: any; comment: any; })=> {
+      return fwaData.fwaList?.map((fwa: { _id: any; employeeID: any; requestDate: any;
+        workType: any; description: any; reason: any; status: any; comment: any; })=> {
         return {
           id:fwa._id,
           employeeID: fwa.employeeID,
@@ -65,14 +66,6 @@ export class FWAService {
     this.router.navigate(['/employee-home']);
   }
 
-  deleteFWA(fwaID: string){
-    this.http.delete('http://localhost:3000/api/fwa/'+ fwaID)
-    .subscribe(()=>{
-      console.log("Deleted");
-      //this.router.navigate(['/supervisor-home']);
-    })
-  }
-
   //Review FWA
   reviewFWA(fwaID: string, employeeID: string, requestDate: Date,
     workType : WorkType, description  : string, reason : string,
@@ -89,6 +82,7 @@ export class FWAService {
     this.http.put('http://localhost:3000/api/fwa/'+ fwaID, fwaReq)
     .subscribe(response =>{
       console.log(response);
+      //only Supervisor can review an FWA, so they are sent back to their home page.
       this.router.navigate(['/supervisor-home']);
     })
   }

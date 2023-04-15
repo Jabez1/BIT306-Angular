@@ -3,7 +3,6 @@ import { WorkType } from '../fwa.model';
 import { FWAService } from '../fwa.service';
 import { NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/emp/auth-service';
-import { Employee } from 'src/app/emp/employee.model';
 
 @Component({
   selector: 'app-fwaform',

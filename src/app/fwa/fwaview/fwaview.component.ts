@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FWAService } from '../fwa.service';
 import { FWA, Status, WorkType } from "../fwa.model";
-import { EmployeeService } from 'src/app/emp/employee.service';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { AuthService } from 'src/app/emp/auth-service';
 import { Employee, Position } from 'src/app/emp/employee.model';
@@ -18,7 +17,8 @@ export class FwaViewComponent {
   readonly Position = Position;
   private fwaListSub: Subscription | undefined;
   private empListSub: Subscription | undefined;
-  readonly Departments = Object.keys(this.employeeService.getDeptList());
+  //Get Department IDs from the Department List
+  readonly Departments = Object.keys(this.authService.getDeptList());
 
   objValues = Object.values;
   objKeys = Object.keys;
@@ -33,16 +33,15 @@ export class FwaViewComponent {
 
   constructor(
     public fwaService: FWAService,
-    public employeeService: EmployeeService,
     public authService: AuthService){
   }
 
   //functions to populate the mat-select in the html page
-  getDeptVal(key : any){ return this.employeeService.getDeptList()[key]; }
+  getDeptVal(key : any){ return this.authService.getDeptList()[key]; }
 
   getDeptValString(key: any){
-    return this.employeeService.getDeptList()[key].deptID + " : "
-    + this.employeeService.getDeptList()[key].deptName;
+    return this.authService.getDeptList()[key].deptID + " : "
+    + this.authService.getDeptList()[key].deptName;
   }
 
   getVal(key : any){
@@ -57,7 +56,7 @@ export class FwaViewComponent {
     return WorkType[enumKey as keyof typeof WorkType];
   }
 
-  //Group FWA for FWA Analytics
+  //Group FWA by either Date or WorkType for FWA Analytics elements
   groupBy = <T, K extends keyof any>(list: T[], getKey: (item: T) => K) =>
   list.reduce((previous, currentItem) => {
     const group = getKey(currentItem);
@@ -85,15 +84,15 @@ export class FwaViewComponent {
       this.fwaListSub = this.fwaService.getFWAListUpdateListener()
       .subscribe((fwaList: FWA[]) => {
         this.fwaList = fwaList.filter(x =>{
-          // console.log(this.findEmpDeptID(x.employeeID) == deptID);
+          //Filters the FWA List by FWA made by Employees who are in the correct Department
           return this.findEmp(x.employeeID)?.deptID == deptID
         });
         // console.log(this.fwaList);
         this.groupedFWAList = this.groupBy(this.fwaList, i =>
           new Date(i.requestDate).toLocaleDateString());
         this.groupedFWAListWorkType = this.groupBy(this.fwaList, i => i.workType);
-          console.log(this.getGroupedFWAList());
-          console.log(this.getGroupedFWAListWorkType());
+          // console.log(this.getGroupedFWAList());
+          // console.log(this.getGroupedFWAListWorkType());
       });
     }
   }
@@ -128,6 +127,7 @@ export class FwaViewComponent {
   }
 
   getLoggedInEmpPos(){
+    //if the Employee logged in is not undefined, return position
     if(this.authService.getLoggedInEmp())
     return this.authService.getLoggedInEmp().position;
     else
