@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Position } from '../employee.model';
 import { NgForm } from '@angular/forms';
-import { EmployeeService } from '../employee.service';
 import { AuthService } from "../auth-service";
 
 @Component({
@@ -10,21 +9,22 @@ import { AuthService } from "../auth-service";
   styleUrls: ['./reg-emp.component.css']
 })
 export class RegEmpComponent {
+  //Filters the Position Enum for a list of Position Names
   readonly Positions = Object.keys(Position).filter(x => !isNaN(Number(x)));
-  readonly Departments = Object.keys(this.employeeService.getDeptList());
+  readonly Departments = Object.keys(this.authService.getDeptList());
   readonly objGetVal = Object.values;
-  constructor(public employeeService: EmployeeService , public authService: AuthService){}
+  constructor( public authService: AuthService){}
 
   getVal(key: any){
     return Position[key as keyof typeof Position];
   }
 
   getDeptVal(key : any){
-    return this.employeeService.getDeptList()[key];
+    return this.authService.getDeptList()[key];
   }
   getDeptValString(key: any){
-    return this.employeeService.getDeptList()[key].deptID + " : "
-    + this.employeeService.getDeptList()[key].deptName;
+    return this.authService.getDeptList()[key].deptID + " : "
+    + this.authService.getDeptList()[key].deptName;
   }
 
   onEmpReg(form: NgForm){

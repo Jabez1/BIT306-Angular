@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { EmployeeService } from '../../employee.service';
 import { AuthService } from "../../auth-service";
 
 @Component({
@@ -10,7 +9,7 @@ import { AuthService } from "../../auth-service";
   styleUrls: ['./new-login.component.css']
 })
 export class NewLoginComponent {
-  constructor(public dialogRef: MatDialogRef<NewLoginComponent>, private employeeService: EmployeeService,
+  constructor(public dialogRef: MatDialogRef<NewLoginComponent>,
     public authService: AuthService) {}
 
   newLogin(form : NgForm){
@@ -18,8 +17,6 @@ export class NewLoginComponent {
       return;
     }
     else{
-      // this.employeeService.newEmpSetup(form.value.password, this.employeeService.whoseLoggedIn().employeeID);
-      // this.employeeService.routeEmp(this.employeeService.whoseLoggedIn());
       this.authService.newEmpSetup(form.value.password);
       this.onNoClick();
     }

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { EmployeeService } from '../employee.service';
 import { Employee, Status, Position} from '../employee.model';
 import { AuthService } from "../auth-service";
 
@@ -12,7 +11,7 @@ import { AuthService } from "../auth-service";
 })
 export class LoginComponent {
 
-  constructor(public employeeService: EmployeeService, public authService: AuthService){}
+  constructor(public authService: AuthService){}
 
 
   login(form : NgForm){
@@ -23,11 +22,8 @@ export class LoginComponent {
     if(emp == undefined ){
       return;
     }
-    // else if(emp.Status == Status.NEW){
-    //   this.openDialog();
-    // }
     else{
-      this.employeeService.routeEmp(emp);
+      this.authService.routeEmp(emp);
     }
   }
 

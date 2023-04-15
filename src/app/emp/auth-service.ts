@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Employee , Position, FWAStatus, Status } from './employee.model';
+import { Employee , Position, FWAStatus, Status, Department } from './employee.model';
 import { Router } from '@angular/router';
 import { NewLoginComponent } from './login/new-login/new-login.component';
-import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -18,6 +18,17 @@ export class AuthService {
   private empList: Employee[]=[];
   private empListUpdated = new Subject<Employee[]>();
   constructor(private http: HttpClient, public dialog: MatDialog, private router: Router){}
+
+  private deptList: Department[]=[
+    {deptID: 'D001', deptName:'Human Resources'},
+    {deptID: 'D002', deptName:'IT Management'},
+    {deptID: 'D003', deptName:'Transportation'}
+  ];
+
+  //getters
+  getDeptList(){
+    return this.deptList;
+  }
 
   getToken(){
     return this.token;
@@ -45,7 +56,6 @@ export class AuthService {
       comment: "None",
       supervisorID: supervisorID,
       deptID : deptID};
-    console.log(authData);
 
     this.http.post('http://localhost:3000/api/employee/signup', authData)
       .subscribe(response =>{
@@ -69,6 +79,7 @@ export class AuthService {
           email: emp.email,
           FWAStatus: emp.FWAStatus,
           Status: emp.Status,
+          //if comments or supervisor ID are undefined, return an empty string instead.
           comment: emp.comment || "",
           supervisorID: emp.supervisorID || "",
           deptID : emp.deptID
@@ -107,8 +118,8 @@ export class AuthService {
           this.authStatusListener.next(true);
         }
         this.loggedInEmp= response.emp;
+        //If Employee is a new Employee, open the New Login Dialog
         if(this.loggedInEmp.Status == Status.NEW){
-          console.log(this.loggedInEmp._id);
           this.openDialog();
         }
         else{
